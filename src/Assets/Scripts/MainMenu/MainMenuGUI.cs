@@ -19,8 +19,15 @@ public class MainMenuGUI : BaseGUI
 	private Global _global;
 	private Vector2 scrollWorlds;
 	private Vector2 scrollLevels;
-	private MenuState state;
 	private World currentWorld;
+	private Stack<MenuState> states;
+	private MenuState State
+	{ 
+		get
+		{
+			return states.Peek();
+		}
+	}
 
 	// Use this for initialization
 	protected override void Start()
@@ -29,13 +36,18 @@ public class MainMenuGUI : BaseGUI
 		
 		GetComponent<CameraControl>().State = CameraControl.CameraState.MainMenu;
 		_global = GameObject.Find("Global").GetComponent<Global>();
+		
+		states = new Stack<MenuState>();
+		
 		if(_global.CurrentLevel.Number == 1 && _global.CurrentWorld.Number == 1)
 		{
-			state = MenuState.Main;
+			states.Push(MenuState.Main);
 		}
 		else
 		{
-			state = MenuState.Levels;
+			states.Push(MenuState.Main);
+			states.Push(MenuState.Worlds);
+			states.Push(MenuState.Levels);
 			currentWorld = _global.CurrentWorld;
 		}
 	}
@@ -61,7 +73,7 @@ public class MainMenuGUI : BaseGUI
 	{
 		base.OnGUI();
 		
-		switch (state)
+		switch (State)
 		{
 			case MenuState.Main:
 				if(Input.GetKeyDown(KeyCode.Escape))
@@ -87,23 +99,23 @@ public class MainMenuGUI : BaseGUI
 	
 	private void MainMenu()
 	{
-		GUILayout.BeginArea(new Rect(0, 0, w, h));
+		GUILayout.BeginArea(screen);
 			GUILayout.BeginVertical();
 				GUILayout.FlexibleSpace();
 				GUILayout.BeginHorizontal();
-					if(GUILayout.Button(Textures.Settings, GUILayout.Width(button_size), GUILayout.Height(button_size)))
+					if(GUILayout.Button(Textures.Settings, button_size_w, button_size_h))
 					{
-						state = MenuState.Settings;
+						states.Push(MenuState.Settings);
 					}
 					GUILayout.FlexibleSpace();
-					if(GUILayout.Button(Localization.Get("play"), GUILayout.MaxWidth(w_2 / 3f), GUILayout.Height(button_size)))
+					if(GUILayout.Button(Localization.Get("play"), GUILayout.MaxWidth(w_2 / 3f), button_size_h))
 					{
-						state = MenuState.Worlds;
+						states.Push(MenuState.Worlds);
 					}
 					GUILayout.FlexibleSpace();
-					if(GUILayout.Button(Textures.Credits, GUILayout.Width(button_size), GUILayout.Height(button_size)))
+					if(GUILayout.Button(Textures.Credits, button_size_w, button_size_h))
 					{
-						state = MenuState.Credits;
+						states.Push(MenuState.Credits);
 					}
 				GUILayout.EndHorizontal();
 			GUILayout.EndVertical();
@@ -115,29 +127,25 @@ public class MainMenuGUI : BaseGUI
 		var bg = Resources.Load("Localization/BG", typeof(Texture)) as Texture;
 		var en = Resources.Load("Localization/EN", typeof(Texture)) as Texture;
 		
-		if(GUILayout.Button(Textures.Back, GUILayout.Width(button_w), GUILayout.Height(button_h)))
-		{
-			state = MenuState.Main;
-		}
-		
-		GUILayout.BeginArea(new Rect(0, 0, w, h));
+		BackButton();
+		GUILayout.BeginArea(screen);
 		GUILayout.BeginHorizontal();
 			GUILayout.FlexibleSpace();
 			GUILayout.BeginVertical();
 			GUILayout.FlexibleSpace();
 			GUILayout.Box(Localization.Get("lang"));
 			GUILayout.BeginHorizontal();
-			if(GUILayout.Button(en, GUILayout.Height(button_h)))
+			if(GUILayout.Button(en, button_height))
 			{
 				Localization.Language = SystemLanguage.English;
 			}
-			if(GUILayout.Button(bg, GUILayout.Height(button_h)))
+			if(GUILayout.Button(bg, button_height))
 			{
 				Localization.Language = SystemLanguage.Bulgarian;
 			}
 			GUILayout.EndHorizontal();
 			GUILayout.Space(button_h);
-			if(GUILayout.Button(Localization.Get("cls"), GUILayout.Height(button_h)))
+			if(GUILayout.Button(Localization.Get("cls"), button_height))
 			{
 				foreach(Level level in _global.Worlds.SelectMany(world => world.Levels))
 				{
@@ -158,12 +166,8 @@ public class MainMenuGUI : BaseGUI
 	
 	private void CreditsMenu()
 	{
-		if(GUILayout.Button(Textures.Back, GUILayout.Width(button_w), GUILayout.Height(button_h)))
-		{
-			state = MenuState.Main;
-		}
-		
-		GUILayout.BeginArea(new Rect(0, 0, w, h));
+		BackButton();
+		GUILayout.BeginArea(screen);
 			GUILayout.BeginHorizontal();
 				GUILayout.FlexibleSpace();
 				GUILayout.BeginVertical();
@@ -178,12 +182,9 @@ public class MainMenuGUI : BaseGUI
 	
 	private void WorldMenu()
 	{
-		GUILayout.BeginArea(new Rect(0, 0, w, h));
+		GUILayout.BeginArea(screen);
 			GUILayout.BeginVertical();
-				if(GUILayout.Button(Textures.Back, GUILayout.Width(button_w), GUILayout.Height(button_h)))
-				{
-					state = MenuState.Main;
-				}
+				BackButton();
 				GUILayout.BeginHorizontal();
 					GUILayout.Space(big_offset);
 					scrollWorlds = GUILayout.BeginScrollView(scrollWorlds, GUILayout.ExpandHeight(true));
@@ -193,7 +194,7 @@ public class MainMenuGUI : BaseGUI
 								if(WorldButton(world))
 								{
 									currentWorld = world;
-									state = MenuState.Levels;
+									states.Push(MenuState.Levels);
 								}
 							}
 						GUILayout.EndHorizontal();
@@ -208,10 +209,7 @@ public class MainMenuGUI : BaseGUI
 	private void LevelMenu()
 	{
 		GUILayout.BeginVertical();
-			if(GUILayout.Button(Textures.Back, GUILayout.Width(button_w), GUILayout.Height(button_h)))
-			{
-				state = MenuState.Main;
-			}
+			BackButton();
 			scrollLevels = GUILayout.BeginScrollView(scrollLevels, GUILayout.Width(w));
 				foreach(Level level in currentWorld.Levels)
 				{
@@ -224,6 +222,17 @@ public class MainMenuGUI : BaseGUI
 			GUILayout.EndScrollView();
 			GUILayout.Space(big_offset);
 		GUILayout.EndVertical();
+	}
+	
+	private void BackButton()
+	{
+		if(GUILayout.Button(Textures.Back, button_width, button_height))
+		{
+			if(states.Count > 0)
+			{
+				states.Pop();
+			}
+		}
 	}
 	
 	private bool LevelButton(Level level)
