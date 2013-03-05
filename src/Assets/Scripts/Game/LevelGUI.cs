@@ -33,7 +33,7 @@ public class LevelGUI : BaseGUI {
 		_cameraControl = GetComponent<CameraControl>();
 		
 		tool = 0;
-		tools = new[]{Images[(int)Textures.Block], Images[(int)Textures.Mark], Images[(int)Textures.Inspect]};
+		tools = new[]{Textures.Block, Textures.Mark, Textures.Inspect};
 		windowRect = new Rect(w_2 - (w_2 / 2f), h_2 - (h_2 / 2f), w_2, h_2);
 	}
 	
@@ -62,11 +62,11 @@ public class LevelGUI : BaseGUI {
 			
 			GUILayout.BeginArea(new Rect(0, 0, w, h));
 				GUILayout.BeginVertical();
-					if(GUILayout.Button(Images[(int)Textures.Menu], GUILayout.Width(button_size), GUILayout.Height(button_size)))
+					if(GUILayout.Button(Textures.Menu, GUILayout.Width(button_size), GUILayout.Height(button_size)))
 					{
 						Application.LoadLevel("MainMenu");
 					}
-					if(GUILayout.Button(Images[(int)Textures.Restart], GUILayout.Width(button_size), GUILayout.Height(button_size)))
+					if(GUILayout.Button(Textures.Restart, GUILayout.Width(button_size), GUILayout.Height(button_size)))
 					{
 						_spawner.RestartLevel();
 						_cameraControl.RestartView();
@@ -74,11 +74,11 @@ public class LevelGUI : BaseGUI {
 					GUILayout.FlexibleSpace();
 				GUILayout.EndVertical();
 				GUILayout.BeginHorizontal();
-					if(GUILayout.Button(Images[(int)Textures.Undo], GUILayout.Width(button_size), GUILayout.Height(button_size)))
+					if(GUILayout.Button(Textures.Undo, GUILayout.Width(button_size), GUILayout.Height(button_size)))
 					{
 						_spawner.UndoBlock();
 					}
-					GUILayout.Box(new GUIContent(NumberOfStars().ToString(), Images[(int)Textures.StarFull]), GUILayout.Width(button_size), GUILayout.Height(button_size));
+					GUILayout.Box(new GUIContent(NumberOfStars().ToString(), Textures.StarFull), GUILayout.Width(button_size), GUILayout.Height(button_size));
 				GUILayout.EndHorizontal();
 			GUILayout.EndArea();
 			
@@ -130,27 +130,27 @@ public class LevelGUI : BaseGUI {
 				for(int i = 1; i <= 3; i++)
 				{
 					if(stars >= i)
-						GUILayout.Label(Images[(int)Textures.StarFull], GUILayout.Width(button_size), GUILayout.Height(button_size));
+						GUILayout.Label(Textures.StarFull, GUILayout.Width(button_size), GUILayout.Height(button_size));
 					else
-						GUILayout.Label(Images[(int)Textures.StarEmpty], GUILayout.Width(button_size), GUILayout.Height(button_size));
+						GUILayout.Label(Textures.StarEmpty, GUILayout.Width(button_size), GUILayout.Height(button_size));
 				}
 				GUILayout.FlexibleSpace();
 			GUILayout.EndHorizontal();
 			GUILayout.FlexibleSpace();
 			GUILayout.BeginHorizontal();
 				GUILayout.FlexibleSpace();
-				if(GUILayout.Button(Images[(int)Textures.Menu], GUILayout.Width(button_size), GUILayout.Height(button_size)))
+				if(GUILayout.Button(Textures.Menu, GUILayout.Width(button_size), GUILayout.Height(button_size)))
 				{
 					Application.LoadLevel("MainMenu");
 				}
 				GUILayout.FlexibleSpace();
-				if(GUILayout.Button(Images[(int)Textures.Restart], GUILayout.Width(button_size), GUILayout.Height(button_size)))
+				if(GUILayout.Button(Textures.Restart, GUILayout.Width(button_size), GUILayout.Height(button_size)))
 				{
 					_spawner.RestartLevel();
 					_cameraControl.RestartView();
 				}
 				GUILayout.FlexibleSpace();
-				if(GUILayout.Button(Images[(int)Textures.Next], GUILayout.Width(button_size), GUILayout.Height(button_size)))
+				if(GUILayout.Button(Textures.Next, GUILayout.Width(button_size), GUILayout.Height(button_size)))
 				{
 					_spawner.LoadLevel(_global.NextLevel().GetData());
 				}

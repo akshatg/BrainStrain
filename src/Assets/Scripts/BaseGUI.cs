@@ -1,27 +1,30 @@
 using UnityEngine;
+using System;
 using System.Collections;
+
+[Serializable]
+public class GUITextures
+{
+	public Texture2D Restart;
+	public Texture2D Menu;
+	public Texture2D Undo;
+	public Texture2D Block;
+	public Texture2D Mark;
+	public Texture2D Inspect;
+	public Texture2D Back;
+	public Texture2D Next;
+	public Texture2D StarFull;
+	public Texture2D StarEmpty;
+	public Texture2D Settings;
+	public Texture2D Play;
+	public Texture2D Credits;
+}
 
 public class BaseGUI : MonoBehaviour
 {
 	public GUISkin Skin;
-	public Texture2D[] Images;
-	
-	protected enum Textures
-	{
-		Restart,
-		Menu,
-		Undo,
-		Block,
-		Mark,
-		Inspect,
-		Back,
-		Next,
-		StarFull,
-		StarEmpty,
-		Settings,
-		Play,
-		Credits
-	}
+	//public Texture2D[] Images;
+	public GUITextures Textures;
 	
 	protected int w;
 	protected int w_2;
