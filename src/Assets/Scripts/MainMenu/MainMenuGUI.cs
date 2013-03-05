@@ -91,7 +91,7 @@ public class MainMenuGUI : BaseGUI
 			GUILayout.BeginVertical();
 				GUILayout.FlexibleSpace();
 				GUILayout.BeginHorizontal();
-					if(GUILayout.Button(Images[(int)Textures.Settings], GUILayout.Width(button_size), GUILayout.Height(button_size)))
+					if(GUILayout.Button(Textures.Settings, GUILayout.Width(button_size), GUILayout.Height(button_size)))
 					{
 						state = MenuState.Settings;
 					}
@@ -101,7 +101,7 @@ public class MainMenuGUI : BaseGUI
 						state = MenuState.Worlds;
 					}
 					GUILayout.FlexibleSpace();
-					if(GUILayout.Button(Images[(int)Textures.Credits], GUILayout.Width(button_size), GUILayout.Height(button_size)))
+					if(GUILayout.Button(Textures.Credits, GUILayout.Width(button_size), GUILayout.Height(button_size)))
 					{
 						state = MenuState.Credits;
 					}
@@ -115,7 +115,7 @@ public class MainMenuGUI : BaseGUI
 		var bg = Resources.Load("Localization/BG", typeof(Texture)) as Texture;
 		var en = Resources.Load("Localization/EN", typeof(Texture)) as Texture;
 		
-		if(GUILayout.Button(Images[(int)Textures.Back], GUILayout.Width(button_w), GUILayout.Height(button_h)))
+		if(GUILayout.Button(Textures.Back, GUILayout.Width(button_w), GUILayout.Height(button_h)))
 		{
 			state = MenuState.Main;
 		}
@@ -158,7 +158,7 @@ public class MainMenuGUI : BaseGUI
 	
 	private void CreditsMenu()
 	{
-		if(GUILayout.Button(Images[(int)Textures.Back], GUILayout.Width(button_w), GUILayout.Height(button_h)))
+		if(GUILayout.Button(Textures.Back, GUILayout.Width(button_w), GUILayout.Height(button_h)))
 		{
 			state = MenuState.Main;
 		}
@@ -180,7 +180,7 @@ public class MainMenuGUI : BaseGUI
 	{
 		GUILayout.BeginArea(new Rect(0, 0, w, h));
 			GUILayout.BeginVertical();
-				if(GUILayout.Button(Images[(int)Textures.Back], GUILayout.Width(button_w), GUILayout.Height(button_h)))
+				if(GUILayout.Button(Textures.Back, GUILayout.Width(button_w), GUILayout.Height(button_h)))
 				{
 					state = MenuState.Main;
 				}
@@ -208,7 +208,7 @@ public class MainMenuGUI : BaseGUI
 	private void LevelMenu()
 	{
 		GUILayout.BeginVertical();
-			if(GUILayout.Button(Images[(int)Textures.Back], GUILayout.Width(button_w), GUILayout.Height(button_h)))
+			if(GUILayout.Button(Textures.Back, GUILayout.Width(button_w), GUILayout.Height(button_h)))
 			{
 				state = MenuState.Main;
 			}
@@ -246,11 +246,11 @@ public class MainMenuGUI : BaseGUI
 		for(int i = 1; i <= 3; i++)
 		{
 			if(level.Stars >= i)
-				GUILayout.Box(Images[(int)Textures.StarFull], w, h);
+				GUILayout.Box(Textures.StarFull, w, h);
 			else
-				GUILayout.Box(Images[(int)Textures.StarEmpty], w, h);
+				GUILayout.Box(Textures.StarEmpty, w, h);
 		}
-		pressed = GUILayout.Button(Images[(int)Textures.Play], w, h);
+		pressed = GUILayout.Button(Textures.Play, w, h);
 		GUILayout.EndHorizontal();
 		return pressed;
 	}
@@ -265,7 +265,7 @@ public class MainMenuGUI : BaseGUI
 		GUILayout.BeginVertical();
 			GUILayout.FlexibleSpace();
 			GUILayout.Box(dificultyImage, w, GUILayout.Height(button_h * 3.5f));
-			GUILayout.Box(new GUIContent(world.Levels.Sum(level => level.Stars) + "/" + world.Levels.Count * 3, Images[(int)Textures.StarFull]), w, h);
+			GUILayout.Box(new GUIContent(world.Levels.Sum(level => level.Stars) + "/" + world.Levels.Count * 3, Textures.StarFull), w, h);
 			pressed = GUILayout.Button(Localization.Get("world" + world.Number), w, h);
 		GUILayout.EndVertical();
 		return pressed;
