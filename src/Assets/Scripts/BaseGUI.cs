@@ -69,7 +69,7 @@ public class BaseGUI : MonoBehaviour
 	// Update is called once per frame
 	protected virtual void Update()
 	{
-		//should I remove this or should I!?
+		//should I remove this or should I! ?
 		InitGUI();
 	}
 	
