@@ -15,6 +15,9 @@ You can download the most recen version of the game builded in the bin forlder d
 ###[Android][]
 
 ##TODO
+- Clen up dirty code mess
+  - GUI classes need lots of cleanup
+  - Make Block class hierarchy instead of using one class(this will make adding new blocks a lot easyer)
 - Add sounds
 - Add Hilbert curve cube level
 - Make random level generation
