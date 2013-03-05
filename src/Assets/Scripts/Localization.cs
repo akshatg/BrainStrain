@@ -27,7 +27,6 @@ public static class Localization
 	static Localization()
 	{
 		Language = Application.systemLanguage;
-		Debug.Log(Application.systemLanguage.ToString());
 	}
 	
 	public static string Get(string key)
