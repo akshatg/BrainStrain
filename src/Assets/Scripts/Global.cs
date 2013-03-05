@@ -46,6 +46,9 @@ public class Level
 	}
 }
 
+/// <summary>
+/// Holds worlds and levels information and manages saving/loading game data
+/// </summary>
 public class Global : MonoBehaviour
 {
 	public static string LevelsFile;
@@ -87,13 +90,10 @@ public class Global : MonoBehaviour
 	{
 		LevelsFile = Application.persistentDataPath + "/levels_data.txt";
 		SettingsFile = Application.persistentDataPath + "/settings_data.txt";
+		
 		if(File.Exists(SettingsFile))
 		{
 			LoadSettingsData(SettingsFile);
-		}
-		else
-		{
-			Localization.Language = SystemLanguage.English;
 		}
 		
 		CreateWorlds();
@@ -102,11 +102,6 @@ public class Global : MonoBehaviour
 			LoadLevelData(LevelsFile);
 		}
 		Application.LoadLevel("MainMenu");
-	}
-	
-	// Update is called once per frame
-	void Update()
-	{
 	}
 	
 	public Level NextLevel()
@@ -235,11 +230,20 @@ public class Global : MonoBehaviour
 	
 	public static class Utills
 	{
+		public static float ClampAngle(float angle, float min, float max)
+		{
+			if (angle < -360)
+				angle += 360;
+			if (angle > 360)
+				angle -= 360;
+			return Mathf.Clamp(angle, min, max);
+		}
+		
 		public static float ScaleValue(float value, float oldMin, float oldMax, float newMin, float newMax)
         {
             float scaledValue;
             scaledValue = newMin + (value - oldMin) / (oldMax - oldMin) * (newMax - newMin);
             return scaledValue;
-        }	
+        }
 	}
 }

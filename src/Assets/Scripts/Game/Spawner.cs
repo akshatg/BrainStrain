@@ -46,7 +46,7 @@ public class Spawner : MonoBehaviour {
 			{
 				if(block != null)
 				{
-					block.Inspected = (CurrentTool == Tool.Inspector);
+					block.Inspected = (_currentTool == Tool.Inspector);
 				}
 			}
 		}
@@ -76,6 +76,7 @@ public class Spawner : MonoBehaviour {
 		}
 	}
 	
+	private Global _global;
 	private Tool _currentTool;
 	private Block[,,] blocks;
 	private Stack<int> undoStack;
@@ -83,7 +84,8 @@ public class Spawner : MonoBehaviour {
 	// Use this for initialization
 	void Start ()
 	{
-		var level = GameObject.Find("Global").GetComponent<Global>().CurrentLevel.GetData();
+		_global = GameObject.Find("Global").GetComponent<Global>();
+		var level = _global.CurrentLevel.GetData();
 		LoadLevel(level);
 	}
 	
@@ -141,8 +143,7 @@ public class Spawner : MonoBehaviour {
 	
 	public void RestartLevel()
 	{
-		while(UndoBlock())
-			UndoBlock();	// This makes me laugh :D
+		while(UndoBlock());// This makes me laugh :D
 		foreach(var block in blocks)
 			if(block != null)
 				block.Marked = false;
@@ -187,6 +188,7 @@ public class Spawner : MonoBehaviour {
 		var index = IdToIndex(id);
 		return CreateBlock((int)index.x, (int)index.y, (int)index.z, number);
 	}
+	
 	public GameObject CreateBlock(int x, int y, int z, int number)
 	{
 		var scale = BlockPrefab.transform.localScale;
@@ -257,7 +259,7 @@ public class Spawner : MonoBehaviour {
 			if(block != null && block.IsDiggit)
 			{
 				var sequence = new List<Block>();
-				var sequenceCount = CountSeparatedFrom(block.Id, sequence);
+				var sequenceCount = CountSeparatedFrom(block, sequence);
 				
 				State state = State.Unsolved;
 				
@@ -280,9 +282,20 @@ public class Spawner : MonoBehaviour {
 		}
 	}
 	
-	//I am proud of this :D RECURSION!!!
-	private int CountSeparatedFrom(int blockId, List<Block> sequence)
+	//use this instead
+	private int CountSeparatedFrom(Block block, List<Block> sequence)
 	{
+		return CountSeparatedFrom(block.Id, sequence, block.Number);
+	}
+	
+	//I am proud of this :D RECURSION!!!
+	private int CountSeparatedFrom(int blockId, List<Block> sequence, int targetCount)
+	{
+		if(sequence.Count > targetCount)
+		{
+			return 0;
+		}
+		
 		var index = IdToIndex(blockId);
 		//check if block is in array bounds
 		for (int i = 0; i < 3; i++)
@@ -300,12 +313,12 @@ public class Spawner : MonoBehaviour {
 		sequence.Add(block);
 		
 		return 1 +
-			CountSeparatedFrom(IndexToId(index + Vector3.forward), sequence) +
-			CountSeparatedFrom(IndexToId(index + Vector3.right), sequence) +
-			CountSeparatedFrom(IndexToId(index + Vector3.back), sequence) +
-			CountSeparatedFrom(IndexToId(index + Vector3.left), sequence) +
-			CountSeparatedFrom(IndexToId(index + Vector3.up), sequence) +
-			CountSeparatedFrom(IndexToId(index + Vector3.down), sequence);
+			CountSeparatedFrom(IndexToId(index + Vector3.forward), sequence, targetCount) +
+			CountSeparatedFrom(IndexToId(index + Vector3.right), sequence, targetCount) +
+			CountSeparatedFrom(IndexToId(index + Vector3.back), sequence, targetCount) +
+			CountSeparatedFrom(IndexToId(index + Vector3.left), sequence, targetCount) +
+			CountSeparatedFrom(IndexToId(index + Vector3.up), sequence, targetCount) +
+			CountSeparatedFrom(IndexToId(index + Vector3.down), sequence, targetCount);
 	}
 	
 	private void ResetCamera()
@@ -321,22 +334,20 @@ public class Spawner : MonoBehaviour {
 		}
 	}
 	
+	//pure magick
 	public static int IndexToId(Vector3 index)
 	{
 		int id = 0;
 		for (int i = 0; i < 3; i++)
-		{
 			id |= (int)index[i] << 8 * i;
-		}
 		return id;
 	}
+	//pure anti-magick
 	public static Vector3 IdToIndex(int id)
 	{
 		Vector3 index = Vector3.zero;
 		for (int i = 0; i < 3; i++)
-		{
 			index[i] = (id & (255 << 8 * i)) >> 8 * i;
-		}
 		return index;
 	}
 }

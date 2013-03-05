@@ -86,7 +86,7 @@ public class CameraControl : MonoBehaviour {
 	
 	private void RotateAroundCenter()
 	{
-		xRotation -= Time.deltaTime * SpeedX * 0.1f;
+		xRotation -= Time.deltaTime * SpeedX * 0.2f;
 		yRotation = 30f;
 	}
 	
@@ -138,12 +138,11 @@ public class CameraControl : MonoBehaviour {
 		rotate = Input.GetMouseButton(0);
 		#endif
 		
-		
 		if(rotate)
 		{
 	        xRotation += rotateAmount.x * SpeedX * 0.02f;
 	        yRotation -= rotateAmount.y * SpeedY * 0.02f;
-	 		yRotation = ClampAngle(yRotation, MinLimitY, MaxLimitY);
+	 		yRotation = Global.Utills.ClampAngle(yRotation, MinLimitY, MaxLimitY);
 		}
 	}
 	
@@ -185,15 +184,6 @@ public class CameraControl : MonoBehaviour {
 		}
 	}
     #endif
-	
-	private float ClampAngle(float angle, float min, float max)
-	{
-		if (angle < -360)
-			angle += 360;
-		if (angle > 360)
-			angle -= 360;
-		return Mathf.Clamp(angle, min, max);
-	}
 	
 	public void RestartView()
 	{
