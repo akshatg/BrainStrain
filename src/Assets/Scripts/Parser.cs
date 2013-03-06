@@ -1,8 +1,41 @@
 using UnityEngine;
+using System.Text;
 using System.IO;
 
 public static class Parser
 {
+	public static string SerializeToString(byte[,,] array)
+	{
+		var builder = new StringBuilder();
+		builder.AppendLine("{");
+		for(int z = 0; z < array.GetLength(0); z++)
+		{
+			builder.AppendLine("\t{");
+			for(int y = 0; y < array.GetLength(1); y++)
+			{
+				builder.Append("\t\t{");
+				for(int x = 0; x < array.GetLength(2) - 1; x++)
+				{
+					builder.AppendFormat("{0},", array[x,y,z]);
+				}
+				builder.AppendFormat("{0}", array[array.GetLength(2) - 1,y,z]);
+				builder.AppendLine("},");
+			}
+			builder.AppendLine("\t},");
+		}
+		builder.AppendLine("}");
+		return builder.ToString();
+	}
+	
+	public static void SerializeToFile(byte[,,] array, string path)
+	{
+		string str = SerializeToString(array);
+		using(TextWriter tw = new StreamWriter(path))
+		{
+			tw.WriteLine(str);	
+		}
+	}
+	
 	public static byte[,,] ParseFromString(string str)
 	{
 		RemoveWhiteSpace(ref str);
