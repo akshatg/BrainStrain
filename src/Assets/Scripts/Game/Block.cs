@@ -86,6 +86,7 @@ public class Block : MonoBehaviour
 	private State _state;
 	private bool _marked;
 	private bool _inspected;
+	private AudioSource hitSound;
 	
 	private bool pressed;
 	private float time;
@@ -95,6 +96,8 @@ public class Block : MonoBehaviour
 		_material = GetComponent<Renderer>().material;
 		_material.mainTexture = Textures[Number];
 		_colider = GetComponent<Collider>();
+		
+		hitSound = GetComponent<AudioSource>();
 	}
 	
 	void Start()
@@ -116,11 +119,13 @@ public class Block : MonoBehaviour
 	}
 	
 	void OnMouseUpAsButton()
-	{
+	{	
 		if(State == State.Unsolved)
 		{
-			if(!IsDiggit && !Inspected)
+			if(!IsDiggit)
 			{
+				AudioSource.PlayClipAtPoint(hitSound.clip, transform.position);
+				
 				var obj = GameObject.Find("Main Camera").GetComponent<Spawner>();
 				if(obj != null)
 				{

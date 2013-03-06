@@ -18,7 +18,7 @@ You can download the most recen version of the game builded in the bin forlder d
 - Clen up dirty code mess
   - GUI classes need lots of cleanup [50%]
   - Make Block class hierarchy instead of using one class(this will make adding new blocks a lot easyer) [0%]
-- Make the Parser to be able to serialize(save) a level in a file [0%]
+- Make the Parser to be able to serialize(save) a level in a file [100%]
 - Add sounds
   - Main soundtrack [0%]
   - Hit block sfx [0%]
