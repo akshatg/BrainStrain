@@ -33,7 +33,7 @@ public class LevelGUI : BaseGUI {
 		_cameraControl = GetComponent<CameraControl>();
 		
 		tool = 0;
-		tools = new[]{Images[(int)Textures.Block], Images[(int)Textures.Mark], Images[(int)Textures.Inspect]};
+		tools = new[]{Textures.Block, Textures.Mark, Textures.Inspect};
 		windowRect = new Rect(w_2 - (w_2 / 2f), h_2 - (h_2 / 2f), w_2, h_2);
 	}
 	
@@ -60,13 +60,13 @@ public class LevelGUI : BaseGUI {
 			Blur = false;
 			GetComponent<CameraControl>().State = CameraControl.CameraState.Game;
 			
-			GUILayout.BeginArea(new Rect(0, 0, w, h));
+			GUILayout.BeginArea(screen);
 				GUILayout.BeginVertical();
-					if(GUILayout.Button(Images[(int)Textures.Menu], GUILayout.Width(button_size), GUILayout.Height(button_size)))
+					if(GUILayout.Button(Textures.Menu, button_size_w, button_size_h))
 					{
 						Application.LoadLevel("MainMenu");
 					}
-					if(GUILayout.Button(Images[(int)Textures.Restart], GUILayout.Width(button_size), GUILayout.Height(button_size)))
+					if(GUILayout.Button(Textures.Restart, button_size_w, button_size_h))
 					{
 						_spawner.RestartLevel();
 						_cameraControl.RestartView();
@@ -74,20 +74,20 @@ public class LevelGUI : BaseGUI {
 					GUILayout.FlexibleSpace();
 				GUILayout.EndVertical();
 				GUILayout.BeginHorizontal();
-					if(GUILayout.Button(Images[(int)Textures.Undo], GUILayout.Width(button_size), GUILayout.Height(button_size)))
+					if(GUILayout.Button(Textures.Undo, button_size_w, button_size_h))
 					{
 						_spawner.UndoBlock();
 					}
-					GUILayout.Box(new GUIContent(NumberOfStars().ToString(), Images[(int)Textures.StarFull]), GUILayout.Width(button_size), GUILayout.Height(button_size));
+					GUILayout.Box(new GUIContent(NumberOfStars().ToString(), Textures.StarFull), button_size_w, button_size_h);
 				GUILayout.EndHorizontal();
 			GUILayout.EndArea();
 			
-			GUILayout.BeginArea(new Rect(0, 0, w, h));
+			GUILayout.BeginArea(screen);
 				GUILayout.BeginVertical();
 					GUILayout.FlexibleSpace();
 					GUILayout.BeginHorizontal();
 						GUILayout.FlexibleSpace();
-						tool = GUILayout.Toolbar(tool, tools, GUILayout.Width(button_size * tools.Length), GUILayout.Height(button_size));
+						tool = GUILayout.Toolbar(tool, tools, GUILayout.Width(button_size * tools.Length), button_size_h);
 						GUILayout.FlexibleSpace();
 					GUILayout.EndHorizontal();
 				GUILayout.EndVertical();
@@ -109,6 +109,7 @@ public class LevelGUI : BaseGUI {
 			stars = 0;
 		return stars;
 	}
+	
 	private void LevelCompleteGUI(int windowId)
 	{
 		//changes the level stars and completed
@@ -130,27 +131,27 @@ public class LevelGUI : BaseGUI {
 				for(int i = 1; i <= 3; i++)
 				{
 					if(stars >= i)
-						GUILayout.Label(Images[(int)Textures.StarFull], GUILayout.Width(button_size), GUILayout.Height(button_size));
+						GUILayout.Label(Textures.StarFull, button_size_w, button_size_h);
 					else
-						GUILayout.Label(Images[(int)Textures.StarEmpty], GUILayout.Width(button_size), GUILayout.Height(button_size));
+						GUILayout.Label(Textures.StarEmpty, button_size_w, button_size_h);
 				}
 				GUILayout.FlexibleSpace();
 			GUILayout.EndHorizontal();
 			GUILayout.FlexibleSpace();
 			GUILayout.BeginHorizontal();
 				GUILayout.FlexibleSpace();
-				if(GUILayout.Button(Images[(int)Textures.Menu], GUILayout.Width(button_size), GUILayout.Height(button_size)))
+				if(GUILayout.Button(Textures.Menu, button_size_w, button_size_h))
 				{
 					Application.LoadLevel("MainMenu");
 				}
 				GUILayout.FlexibleSpace();
-				if(GUILayout.Button(Images[(int)Textures.Restart], GUILayout.Width(button_size), GUILayout.Height(button_size)))
+				if(GUILayout.Button(Textures.Restart, button_size_w, button_size_h))
 				{
 					_spawner.RestartLevel();
 					_cameraControl.RestartView();
 				}
 				GUILayout.FlexibleSpace();
-				if(GUILayout.Button(Images[(int)Textures.Next], GUILayout.Width(button_size), GUILayout.Height(button_size)))
+				if(GUILayout.Button(Textures.Next, button_size_w, button_size_h))
 				{
 					_spawner.LoadLevel(_global.NextLevel().GetData());
 				}

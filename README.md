@@ -16,16 +16,21 @@ You can download the most recen version of the game builded in the bin forlder d
 
 ##TODO
 - Clen up dirty code mess
-  - GUI classes need lots of cleanup
-  - Make Block class hierarchy instead of using one class(this will make adding new blocks a lot easyer)
+  - GUI classes need lots of cleanup [50%]
+  - Make Block class hierarchy instead of using one class(this will make adding new blocks a lot easyer) [0%]
+- Make the Parser to be able to serialize(save) a level in a file [0%]
 - Add sounds
-- Add Hilbert curve cube level
-- Make random level generation
-- Make level creator
+  - Main soundtrack [0%]
+  - Hit block sfx [0%]
+  - Level complete sfx [0%]
+  - others that I can't think of right now :D
+- Add Hilbert curve cube level [0%]
+- Make random level generation [0%]
+- Make level creator [0%]
 - Add more blocks
-  - 'portal' blocks
-  - TNT block
-  - others
+  - 'portal' blocks [0%]
+  - TNT block [0%]
+  - others [0%]
 
 *full TODO [here][todo]*
 
