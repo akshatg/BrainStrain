@@ -27,6 +27,7 @@ You can download the most recen version of the game builded in the bin forlder d
   - Undo block sfx [0%]
   - Level complete sfx [0%]
   - others that I can't think of right now :D
+- Maybe add some encryption to save files [0%]
 - Add Hilbert curve cube level [0%]
 - Make random level generation [0%]
 - Make level creator [0%]
