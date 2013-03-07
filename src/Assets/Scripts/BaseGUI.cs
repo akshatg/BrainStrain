@@ -18,6 +18,10 @@ public class GUITextures
 	public Texture2D Settings;
 	public Texture2D Play;
 	public Texture2D Credits;
+	public Texture2D MusicOn;
+	public Texture2D MusicOff;
+	public Texture2D SoundsOn;
+	public Texture2D SoundsOff;
 }
 
 public class BaseGUI : MonoBehaviour

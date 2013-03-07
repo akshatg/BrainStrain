@@ -124,7 +124,10 @@ public class Block : MonoBehaviour
 		{
 			if(!IsDiggit)
 			{
-				AudioSource.PlayClipAtPoint(hitSound.clip, transform.position);
+				if(GameObject.Find("Global").GetComponent<Global>().SoundsOn)
+				{
+					AudioSource.PlayClipAtPoint(hitSound.clip, transform.position);
+				}
 				
 				var obj = GameObject.Find("Main Camera").GetComponent<Spawner>();
 				if(obj != null)

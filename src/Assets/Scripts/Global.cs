@@ -61,7 +61,6 @@ public class Global : MonoBehaviour
 			return Worlds[currentWorld];
 		}
 	}
-	
 	public Level CurrentLevel
 	{
 		get
@@ -74,9 +73,31 @@ public class Global : MonoBehaviour
 			currentWorld = value.World - 1;
 		}
 	}
+	public bool MusicOn
+	{
+		get
+		{
+			return musicOn;	
+		}
+		set
+		{
+			musicOn = value;
+			if(musicOn)
+			{
+				if(!audio.isPlaying)
+					audio.Play();
+			}
+			else
+			{
+				audio.Pause();	
+			}
+		}
+	}
+	public bool SoundsOn{get; set;}
 	
 	public List<World> Worlds{ get; private set; }
 	
+	private bool musicOn;
 	private int currentLevel;
 	private int currentWorld;
 	
@@ -94,6 +115,11 @@ public class Global : MonoBehaviour
 		if(File.Exists(SettingsFile))
 		{
 			LoadSettingsData(SettingsFile);
+		}
+		else
+		{
+			MusicOn = true;
+			SoundsOn = true;
 		}
 		
 		CreateWorlds();
@@ -128,6 +154,8 @@ public class Global : MonoBehaviour
 			var dictionary = Json.Deserialize(sr.ReadToEnd()) as Dictionary<string, object>;
 			
 			Localization.Language = (SystemLanguage)(int)(long)dictionary["Language"];
+			MusicOn = (bool)dictionary["Music"];
+			SoundsOn = (bool)dictionary["Sounds"];
 		}
 	}
 	
@@ -164,6 +192,8 @@ public class Global : MonoBehaviour
 			var dictionary = new Dictionary<string, object>();
 			
 			dictionary["Language"] = (int)Localization.Language;
+			dictionary["Music"] = MusicOn;
+			dictionary["Sounds"] = SoundsOn;
 			
 			sw.WriteLine(Json.Serialize(dictionary));
 		}

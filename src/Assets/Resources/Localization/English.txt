@@ -41,6 +41,7 @@
 	"Book" : "Book",
 	"play" : "Play",
 	"lang" : "Language",
+	"snd" : "Audio",
 	"cls" : "Clear progress",
 	"credits" : "Game by\nBorislav Kosharov\nand\nAleksander Todorov",
 	"congratulations" : "Congratulations!",

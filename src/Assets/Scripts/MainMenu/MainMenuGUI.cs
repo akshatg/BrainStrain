@@ -144,7 +144,17 @@ public class MainMenuGUI : BaseGUI
 				Localization.Language = SystemLanguage.Bulgarian;
 			}
 			GUILayout.EndHorizontal();
-			GUILayout.Space(button_h);
+			GUILayout.Box(Localization.Get("snd"));
+			GUILayout.BeginHorizontal();
+			if(_global.MusicOn)
+				_global.MusicOn = !GUILayout.Button(Textures.MusicOn, button_height);
+			else
+				_global.MusicOn = GUILayout.Button(Textures.MusicOff, button_height);
+			if(_global.SoundsOn)
+				_global.SoundsOn = !GUILayout.Button(Textures.SoundsOn, button_height);
+			else
+				_global.SoundsOn = GUILayout.Button(Textures.SoundsOff, button_height);
+			GUILayout.EndHorizontal();
 			if(GUILayout.Button(Localization.Get("cls"), button_height))
 			{
 				foreach(Level level in _global.Worlds.SelectMany(world => world.Levels))
