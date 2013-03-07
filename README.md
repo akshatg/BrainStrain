@@ -20,8 +20,11 @@ You can download the most recen version of the game builded in the bin forlder d
   - Make Block class hierarchy instead of using one class(this will make adding new blocks a lot easyer) [0%]
 - Make the Parser to be able to serialize(save) a level in a file [100%]
 - Add sounds
-  - Main soundtrack [50%]
-  - Hit block sfx [50%]
+  - Create Audio class for playing everything(don't use Global) [0%]
+  - Add GUI buttons for audio options [100%]
+  - Main soundtrack (temp placeholder) [90%]
+  - Hit block sfx (temp placeholder) [90%]
+  - Undo block sfx [0%]
   - Level complete sfx [0%]
   - others that I can't think of right now :D
 - Add Hilbert curve cube level [0%]
