@@ -73,31 +73,9 @@ public class Global : MonoBehaviour
 			currentWorld = value.World - 1;
 		}
 	}
-	public bool MusicOn
-	{
-		get
-		{
-			return musicOn;	
-		}
-		set
-		{
-			musicOn = value;
-			if(musicOn)
-			{
-				if(!audio.isPlaying)
-					audio.Play();
-			}
-			else
-			{
-				audio.Pause();	
-			}
-		}
-	}
-	public bool SoundsOn{get; set;}
 	
 	public List<World> Worlds{ get; private set; }
 	
-	private bool musicOn;
 	private int currentLevel;
 	private int currentWorld;
 	
@@ -115,11 +93,6 @@ public class Global : MonoBehaviour
 		if(File.Exists(SettingsFile))
 		{
 			LoadSettingsData(SettingsFile);
-		}
-		else
-		{
-			MusicOn = true;
-			SoundsOn = true;
 		}
 		
 		CreateWorlds();
@@ -154,8 +127,11 @@ public class Global : MonoBehaviour
 			var dictionary = Json.Deserialize(sr.ReadToEnd()) as Dictionary<string, object>;
 			
 			Localization.Language = (SystemLanguage)(int)(long)dictionary["Language"];
-			MusicOn = (bool)dictionary["Music"];
-			SoundsOn = (bool)dictionary["Sounds"];
+			Musician.MusicOn = (bool)dictionary["Music"];
+			Musician.SoundsOn = (bool)dictionary["Sounds"];
+			Musician.MusicVolume = (float)(double)dictionary["MusicVolume"];
+			Musician.SoundsVolume = (float)(double)dictionary["SoundsVolume"];
+			Musician.MasterVolume = (float)(double)dictionary["MasterVolume"];
 		}
 	}
 	
@@ -192,8 +168,11 @@ public class Global : MonoBehaviour
 			var dictionary = new Dictionary<string, object>();
 			
 			dictionary["Language"] = (int)Localization.Language;
-			dictionary["Music"] = MusicOn;
-			dictionary["Sounds"] = SoundsOn;
+			dictionary["Music"] = Musician.MusicOn;
+			dictionary["Sounds"] = Musician.SoundsOn;
+			dictionary["MusicVolume"] = Musician.MusicVolume;
+			dictionary["SoundsVolume"] = Musician.SoundsVolume;
+			dictionary["MasterVolume"] = Musician.MasterVolume;
 			
 			sw.WriteLine(Json.Serialize(dictionary));
 		}

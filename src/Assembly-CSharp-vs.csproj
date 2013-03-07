@@ -54,6 +54,7 @@
      <Compile Include="Assets\Scripts\Localization.cs" />
      <Compile Include="Assets\Scripts\MainMenu\BrainStrain.cs" />
      <Compile Include="Assets\Scripts\MainMenu\MainMenuGUI.cs" />
+     <Compile Include="Assets\Scripts\Musician.cs" />
      <Compile Include="Assets\Scripts\Parser.cs" />
      <None Include="Assets\Resources\Levels\World 5\5_4_Sailboat.txt" />
      <None Include="Assets\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\_BloomAndFlares\BlendOneOne.shader" />

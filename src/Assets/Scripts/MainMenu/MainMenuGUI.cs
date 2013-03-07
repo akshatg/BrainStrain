@@ -135,26 +135,29 @@ public class MainMenuGUI : BaseGUI
 			GUILayout.FlexibleSpace();
 			GUILayout.Box(Localization.Get("lang"));
 			GUILayout.BeginHorizontal();
-			if(GUILayout.Button(en, button_height))
+			if(GUILayout.Button(en, button_width, button_height))
 			{
 				Localization.Language = SystemLanguage.English;
 			}
-			if(GUILayout.Button(bg, button_height))
+			if(GUILayout.Button(bg, button_width, button_height))
 			{
 				Localization.Language = SystemLanguage.Bulgarian;
 			}
 			GUILayout.EndHorizontal();
 			GUILayout.Box(Localization.Get("snd"));
 			GUILayout.BeginHorizontal();
-			if(_global.MusicOn)
-				_global.MusicOn = !GUILayout.Button(Textures.MusicOn, button_height);
+			if(Musician.MusicOn)
+				Musician.MusicOn = !GUILayout.Button(Textures.MusicOn, button_width, button_height);
 			else
-				_global.MusicOn = GUILayout.Button(Textures.MusicOff, button_height);
-			if(_global.SoundsOn)
-				_global.SoundsOn = !GUILayout.Button(Textures.SoundsOn, button_height);
+				Musician.MusicOn = GUILayout.Button(Textures.MusicOff, button_width, button_height);
+			if(Musician.SoundsOn)
+				Musician.SoundsOn = !GUILayout.Button(Textures.SoundsOn, button_width, button_height);
 			else
-				_global.SoundsOn = GUILayout.Button(Textures.SoundsOff, button_height);
+				Musician.SoundsOn = GUILayout.Button(Textures.SoundsOff, button_width, button_height);
 			GUILayout.EndHorizontal();
+			Musician.MusicVolume = VolumeSlider(Musician.MusicVolume, Localization.Get("music"));
+			Musician.SoundsVolume = VolumeSlider(Musician.SoundsVolume, Localization.Get("sounds"));
+			Musician.MasterVolume = VolumeSlider(Musician.MasterVolume, Localization.Get("master"));
 			if(GUILayout.Button(Localization.Get("cls"), button_height))
 			{
 				foreach(Level level in _global.Worlds.SelectMany(world => world.Levels))
@@ -243,6 +246,15 @@ public class MainMenuGUI : BaseGUI
 				states.Pop();
 			}
 		}
+	}
+	
+	private float VolumeSlider(float volume, string name)
+	{
+		GUILayout.BeginHorizontal();
+			GUILayout.Box(name, button_width);
+			volume = GUILayout.HorizontalSlider(volume, 0f, 1f);
+		GUILayout.EndHorizontal();
+		return volume;
 	}
 	
 	private bool LevelButton(Level level)

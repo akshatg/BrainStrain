@@ -18,9 +18,11 @@ You can download the most recen version of the game builded in the bin forlder d
 - Clen up dirty code mess
   - GUI classes need lots of cleanup [50%]
   - Make Block class hierarchy instead of using one class(this will make adding new blocks a lot easyer) [0%]
+  - Merge MainMenu and Game scenes for better stuff [0%]
 - Make the Parser to be able to serialize(save) a level in a file [100%]
 - Add sounds
-  - Create Audio class for playing everything(don't use Global) [0%]
+  - Create Audio class for playing everything(don't use Global) [90%]
+  - Make the mute buttons available in-game and redesign the Audio settings GUI [20%]
   - Add GUI buttons for audio options [100%]
   - Main soundtrack (temp placeholder) [90%]
   - Hit block sfx (temp placeholder) [90%]
