@@ -36,17 +36,17 @@ public class Spawner : MonoBehaviour {
 	{ 
 		get
 		{
-			return _currentTool;
+			return currentTool;
 		}
 		set
 		{
-			_currentTool = value;
+			currentTool = value;
 			
 			foreach(var block in blocks)
 			{
 				if(block != null)
 				{
-					block.Inspected = (_currentTool == Tool.Inspector);
+					block.Inspected = (currentTool == Tool.Inspector);
 				}
 			}
 		}
@@ -68,16 +68,18 @@ public class Spawner : MonoBehaviour {
 	{
 		get
 		{
-			var vect =  new Vector3();
-			vect.x = blocks.GetLength(0);
-			vect.y = blocks.GetLength(1);
-			vect.z = blocks.GetLength(2);
-			return vect.magnitude / 2f;
+		    var vect = new Vector3
+		                   {
+		                       x = blocks.GetLength(0),
+                               y = blocks.GetLength(1),
+                               z = blocks.GetLength(2)
+		                   };
+		    return vect.magnitude / 2f;
 		}
 	}
 	
 	private Global _global;
-	private Tool _currentTool;
+	private Tool currentTool;
 	private Block[,,] blocks;
 	private Stack<int> undoStack;
 	
@@ -143,8 +145,8 @@ public class Spawner : MonoBehaviour {
 	
 	public void RestartLevel()
 	{
-		while(UndoBlock());// This makes me laugh :D
-		foreach(var block in blocks)
+		while(UndoBlock()){}
+	    foreach(var block in blocks)
 			if(block != null)
 				block.Marked = false;
 		ResetUndos();
@@ -233,7 +235,7 @@ public class Spawner : MonoBehaviour {
 		const int minUndos = 1;
 		const int maxUndos = 15;
 		
-		var count = BlocksCount((Block b) => b != null && !b.IsDiggit);
+		var count = BlocksCount(b => b != null && !b.IsDiggit);
 		StartingUndos =  Mathf.Clamp(count / 5, minUndos, maxUndos);
 		
 		UndosLeft = StartingUndos;
@@ -324,11 +326,11 @@ public class Spawner : MonoBehaviour {
 	private void ResetCamera()
 	{
 		//set the rotation center of camera controller
-		var cameraControl = this.GetComponent<CameraControl>();
+		var cameraControl = GetComponent<CameraControl>();
 		if(cameraControl != null)
 		{
-			cameraControl.RotationCenter = this.RotationCenter;
-			cameraControl.MinDistance = this.MinDistance + 1.5f;
+			cameraControl.RotationCenter = RotationCenter;
+			cameraControl.MinDistance = MinDistance + 1.5f;
 			cameraControl.MaxDistance = cameraControl.MinDistance * 2.5f;
 			cameraControl.RestartView();
 		}

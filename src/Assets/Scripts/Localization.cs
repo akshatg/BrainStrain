@@ -10,7 +10,7 @@ public static class Localization
 	{
 		get
 		{
-			return _language;
+			return language;
 		}
 		set
 		{
@@ -18,21 +18,21 @@ public static class Localization
 		}
 	}
 	
-	private static SystemLanguage _language;
-	private static Dictionary<string, string> _dictionary;
+	private static SystemLanguage language;
+	private static Dictionary<string, string> dictionary;
 	
-	private static readonly List<SystemLanguage> suportedLanguages = new List<SystemLanguage>(){SystemLanguage.Bulgarian, SystemLanguage.English};
-	private static readonly SystemLanguage standardLanguage = SystemLanguage.English;
-	
-	static Localization()
+	private static readonly List<SystemLanguage> suportedLanguages = new List<SystemLanguage>{SystemLanguage.Bulgarian, SystemLanguage.English};
+    private const SystemLanguage standardLanguage = SystemLanguage.English;
+
+    static Localization()
 	{
 		Language = Application.systemLanguage;
 	}
 	
 	public static string Get(string key)
 	{
-		if(_dictionary != null)
-			return _dictionary[key];
+		if(dictionary != null)
+			return dictionary[key];
 		throw new NullReferenceException("_dictionary was not initialized correctly(it is null)");
 	}
 	
@@ -40,19 +40,19 @@ public static class Localization
 	{
 		if(suportedLanguages.Contains(language))
 		{
-			_language = language;
+			Localization.language = language;
 		}
 		else
 		{
 			Debug.LogWarning("Unsupported language: " + language.ToString() + "!");
-			_language = standardLanguage;
+			Localization.language = standardLanguage;
 		}
 		
-		var jsonString = (Resources.Load("Localization/" + _language.ToString()) as TextAsset).text;
-		_dictionary = new Dictionary<string, string>();
-		foreach(var item in Json.Deserialize(jsonString) as Dictionary<string,object>)
+		var jsonString = ((TextAsset)Resources.Load("Localization/" + Localization.language)).text;
+		dictionary = new Dictionary<string, string>();
+		foreach(var item in (Dictionary<string, object>)Json.Deserialize(jsonString))
 		{
-			_dictionary.Add(item.Key, (string)item.Value);
+			dictionary.Add(item.Key, (string)item.Value);
 		}
 	}
 }

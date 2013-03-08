@@ -15,11 +15,12 @@ You can download the most recen version of the game builded in the bin forlder d
 ###[Android][]
 
 ##TODO
+[High priority]
 - Clen up dirty code mess
   - GUI classes need lots of cleanup [50%]
   - Make Block class hierarchy instead of using one class(this will make adding new blocks a lot easyer) [0%]
   - Merge MainMenu and Game scenes for better stuff [0%]
-- Make the Parser to be able to serialize(save) a level in a file [100%]
+- Make the Parser to be able to serialize(save) a level in a file (not tested)[90%]
 - Add sounds
   - Create Audio class for playing everything(don't use Global) [90%]
   - Make the mute buttons available in-game and redesign the Audio settings GUI [20%]
@@ -30,6 +31,7 @@ You can download the most recen version of the game builded in the bin forlder d
   - Level complete sfx [0%]
   - others that I can't think of right now :D
 - Maybe add some encryption to save files [0%]
+[Llow priority]
 - Add Hilbert curve cube level [0%]
 - Make random level generation [0%]
 - Make level creator [0%]

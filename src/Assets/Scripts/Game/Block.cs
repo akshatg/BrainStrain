@@ -27,74 +27,74 @@ public class Block : MonoBehaviour
 	{ 
 		get
 		{
-			return _state;
+			return state;
 		}
 		set
 		{
-			_state = value;
-			_material.mainTexture = Textures[Number];
-			_material.color = Palete[(int)_state];
-			_colider.enabled = (_state == State.Unsolved);
+			state = value;
+			material.mainTexture = Textures[Number];
+			material.color = Palete[(int)state];
+			colider.enabled = (state == State.Unsolved);
 		}
 	}
 	public bool Marked
 	{
 		get
 		{
-			return _marked;
+			return marked;
 		}
 		set
 		{
-			_marked = value;
+			marked = value;
 		}
 	}
 	public bool Inspected
 	{
 		get
 		{
-			return _inspected;
+			return inspected;
 		}
 		set
 		{
-			_inspected = value;
+			inspected = value;
 			
 			if(!IsDiggit)
 			{
 				if(State == State.Unsolved)
 				{
-					if(_inspected)
+					if(inspected)
 					{
-						var col = _material.color;
+						var col = material.color;
 						col.a = 0.5f;
-						_material.color = col;
-						_colider.enabled = false;
+						material.color = col;
+						colider.enabled = false;
 					}
 					else
 					{
-						var col = _material.color;
+						var col = material.color;
 						col.a = 1f;
-						_material.color = col;
-						_colider.enabled = true;
+						material.color = col;
+						colider.enabled = true;
 					}
 				}
 			}
 		}
 	}
 	
-	private Material _material;
-	private Collider _colider;
-	private State _state;
-	private bool _marked;
-	private bool _inspected;
+	private Material material;
+	private Collider colider;
+	private State state;
+	private bool marked;
+	private bool inspected;
 	
 	private bool pressed;
 	private float time;
 	
 	void Awake()
 	{
-		_material = GetComponent<Renderer>().material;
-		_material.mainTexture = Textures[Number];
-		_colider = GetComponent<Collider>();
+		material = GetComponent<Renderer>().material;
+		material.mainTexture = Textures[Number];
+		colider = GetComponent<Collider>();
 	}
 	
 	void Start()
@@ -105,13 +105,13 @@ public class Block : MonoBehaviour
 	// Update is called once per frame
 	void Update()
 	{
-		if(Marked && _material.mainTexture != Textures[Textures.Length - 1])
+		if(Marked && material.mainTexture != Textures[Textures.Length - 1])
 		{
-			_material.mainTexture = Textures[Textures.Length - 1];
+			material.mainTexture = Textures[Textures.Length - 1];
 		}
-		else if(!Marked && _material.mainTexture != Textures[Number])
+		else if(!Marked && material.mainTexture != Textures[Number])
 		{
-			_material.mainTexture = Textures[Number];
+			material.mainTexture = Textures[Number];
 		}
 	}
 	

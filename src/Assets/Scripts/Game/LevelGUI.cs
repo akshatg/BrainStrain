@@ -16,11 +16,11 @@ public class LevelGUI : BaseGUI {
 	}
 	
 	private Global _global;
-	private Spawner _spawner;
-	private CameraControl _cameraControl;
+	private Spawner spawner;
+	private CameraControl cameraControl;
 	
 	private int tool;
-	private Texture2D[] tools;
+	private Texture[] tools;
 	private Rect windowRect;
 	
 	// Use this for initialization
@@ -29,8 +29,8 @@ public class LevelGUI : BaseGUI {
 		base.Start();
 		
 		_global = GameObject.Find("Global").GetComponent<Global>();
-		_spawner = GetComponent<Spawner>();
-		_cameraControl = GetComponent<CameraControl>();
+		spawner = GetComponent<Spawner>();
+		cameraControl = GetComponent<CameraControl>();
 		
 		tool = 0;
 		tools = new[]{Textures.Block, Textures.Mark, Textures.Inspect};
@@ -47,7 +47,7 @@ public class LevelGUI : BaseGUI {
 	{
 		base.OnGUI();
 		
-		if(_spawner.LevelSolved)
+		if(spawner.LevelSolved)
 		{
 			#if !(UNITY_ANDROID || UNITY_IOS)
 			Blur = true;
@@ -68,15 +68,15 @@ public class LevelGUI : BaseGUI {
 					}
 					if(GUILayout.Button(Textures.Restart, button_size_w, button_size_h))
 					{
-						_spawner.RestartLevel();
-						_cameraControl.RestartView();
+						spawner.RestartLevel();
+						cameraControl.RestartView();
 					}
 					GUILayout.FlexibleSpace();
 				GUILayout.EndVertical();
 				GUILayout.BeginHorizontal();
 					if(GUILayout.Button(Textures.Undo, button_size_w, button_size_h))
 					{
-						_spawner.UndoBlock();
+						spawner.UndoBlock();
 					}
 					GUILayout.Box(new GUIContent(NumberOfStars().ToString(), Textures.StarFull), button_size_w, button_size_h);
 				GUILayout.EndHorizontal();
@@ -95,7 +95,7 @@ public class LevelGUI : BaseGUI {
 			
 			if(GUI.changed)
 			{
-				_spawner.CurrentTool = (Tool)tool;
+				spawner.CurrentTool = (Tool)tool;
 			}
 		}
 	}
@@ -103,8 +103,8 @@ public class LevelGUI : BaseGUI {
 	private int NumberOfStars()
 	{
 		int stars;
-		if(_spawner.UndosLeft >= 0)
-			stars = Mathf.CeilToInt(Global.Utills.ScaleValue(_spawner.UndosLeft, 0, _spawner.StartingUndos, 1, 3));
+		if(spawner.UndosLeft >= 0)
+			stars = Mathf.CeilToInt(Global.Utills.ScaleValue(spawner.UndosLeft, 0, spawner.StartingUndos, 1, 3));
 		else
 			stars = 0;
 		return stars;
@@ -130,10 +130,7 @@ public class LevelGUI : BaseGUI {
 				GUILayout.FlexibleSpace();
 				for(int i = 1; i <= 3; i++)
 				{
-					if(stars >= i)
-						GUILayout.Label(Textures.StarFull, button_size_w, button_size_h);
-					else
-						GUILayout.Label(Textures.StarEmpty, button_size_w, button_size_h);
+				    GUILayout.Label(stars >= i ? Textures.StarFull : Textures.StarEmpty, button_size_w, button_size_h);
 				}
 				GUILayout.FlexibleSpace();
 			GUILayout.EndHorizontal();
@@ -147,13 +144,13 @@ public class LevelGUI : BaseGUI {
 				GUILayout.FlexibleSpace();
 				if(GUILayout.Button(Textures.Restart, button_size_w, button_size_h))
 				{
-					_spawner.RestartLevel();
-					_cameraControl.RestartView();
+					spawner.RestartLevel();
+					cameraControl.RestartView();
 				}
 				GUILayout.FlexibleSpace();
 				if(GUILayout.Button(Textures.Next, button_size_w, button_size_h))
 				{
-					_spawner.LoadLevel(_global.NextLevel().GetData());
+					spawner.LoadLevel(_global.NextLevel().GetData());
 				}
 				GUILayout.FlexibleSpace();
 			GUILayout.EndHorizontal();

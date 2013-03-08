@@ -62,7 +62,7 @@ public class CameraControl : MonoBehaviour {
 	
 	private void ZoomCamera()
 	{
-		float zoomAmount = 0;
+		float zoomAmount;
 		
 		#if UNITY_ANDROID || UNITY_IPHONE
 		if(Input.touchCount == 2 && Input.GetTouch(0).phase == TouchPhase.Moved && Input.GetTouch(1).phase == TouchPhase.Moved)

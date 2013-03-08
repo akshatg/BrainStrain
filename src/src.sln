@@ -1,9 +1,8 @@
-Microsoft Visual Studio Solution File, Format Version 10.00
-# Visual Studio 2008
-
-Project("{25D902C2-4283-AB8C-FBAC-54DFA101AD31}") = "src", "Assembly-CSharp-firstpass.csproj", "{E53CDB40-1DF9-8A61-5878-81243AFDF805}"
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp-firstpass", "Assembly-CSharp-firstpass.csproj", "{E53CDB40-1DF9-8A61-5878-81243AFDF805}"
 EndProject
-Project("{25D902C2-4283-AB8C-FBAC-54DFA101AD31}") = "src", "Assembly-CSharp.csproj", "{4CFFDA30-0E63-039E-0DCA-DAC117CE2649}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp", "Assembly-CSharp.csproj", "{4CFFDA30-0E63-039E-0DCA-DAC117CE2649}"
 EndProject
 Project("{25D902C2-4283-AB8C-FBAC-54DFA101AD31}") = "src", "Assembly-UnityScript-firstpass.unityproj", "{AD3E0071-432F-F80C-C7FE-310C20C08FA0}"
 EndProject
@@ -35,5 +34,4 @@ Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
-	
 EndGlobal

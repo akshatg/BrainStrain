@@ -25,11 +25,13 @@ public class BrainStrain : MonoBehaviour {
 	{
 		get
 		{
-			var vect =  new Vector3();
-			vect.x = blocks.GetLength(0);
-			vect.y = blocks.GetLength(1);
-			vect.z = blocks.GetLength(2);
-			return vect.magnitude / 2f;
+		    var vect = new Vector3
+		                   {
+		                       x = blocks.GetLength(0), 
+                               y = blocks.GetLength(1), 
+                               z = blocks.GetLength(2)
+		                   };
+		    return vect.magnitude / 2f;
 		}
 	}
 	
@@ -45,8 +47,8 @@ public class BrainStrain : MonoBehaviour {
 		var cameraControl = GameObject.Find("Main Camera").GetComponent<CameraControl>();
 		if(cameraControl != null)
 		{
-			cameraControl.RotationCenter = this.RotationCenter;
-			cameraControl.MinDistance = this.MinDistance + 1.5f;
+			cameraControl.RotationCenter = RotationCenter;
+			cameraControl.MinDistance = MinDistance + 1.5f;
 			cameraControl.MaxDistance = cameraControl.MinDistance * 2.5f;
 			cameraControl.RestartView();
 		}
@@ -67,12 +69,12 @@ public class BrainStrain : MonoBehaviour {
 			result[xx,yy,zz] = _;
 		}
 		
-		var jsonString = (Resources.Load("BrainStrain") as TextAsset).text;
+		var jsonString = ((TextAsset) Resources.Load("BrainStrain")).text;
 		
-		var list = Json.Deserialize(jsonString) as List<object>;
+		var list = (List<object>)Json.Deserialize(jsonString);
 		foreach(var item in list)
 		{
-			var dict = item as Dictionary<string,object>;
+            var dict = (Dictionary<string, object>)item;
 			var x = (byte)(long)dict["x"];
 			var y = (byte)(long)dict["y"];
 			var z = (byte)(long)dict["z"];

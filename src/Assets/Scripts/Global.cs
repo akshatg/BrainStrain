@@ -25,7 +25,7 @@ public class Level
 	{
 		get
 		{
-			return World.ToString() + "_" + Number.ToString() + "_" + Name;
+			return World + "_" + Number + "_" + Name;
 		}
 	}
 	
@@ -38,11 +38,13 @@ public class Level
 	public static Level FromFileName(string name)
 	{
 		var data = name.Split('_');
-		Level level = new Level();
-		level.World = int.Parse(data[0]);
-		level.Number = int.Parse(data[1]);
-		level.Name = data[2];
-		return level;
+	    Level level = new Level
+	                      {
+	                          World = int.Parse(data[0]), 
+                              Number = int.Parse(data[1]), 
+                              Name = data[2]
+	                      };
+	    return level;
 	}
 }
 
@@ -124,7 +126,7 @@ public class Global : MonoBehaviour
 	{
 		using(StreamReader sr = new StreamReader(filename))
 		{
-			var dictionary = Json.Deserialize(sr.ReadToEnd()) as Dictionary<string, object>;
+            var dictionary = (Dictionary<string, object>)Json.Deserialize(sr.ReadToEnd());
 			
 			Localization.Language = (SystemLanguage)(int)(long)dictionary["Language"];
 			Musician.MusicOn = (bool)dictionary["Music"];
@@ -201,17 +203,19 @@ public class Global : MonoBehaviour
 		Worlds = new List<World>();
 		
 		var files = Resources.LoadAll("Levels", typeof(TextAsset)).Select(e => e.name);
-		
-		foreach(var item in files.Select(filename => Level.FromFileName(filename))
+
+        foreach (var item in files.Select(fileName => Level.FromFileName(fileName))
 								 .GroupBy(level => level.World)
 		        				 .OrderBy(item => item.Key)
 		       )
 		{
-			var world = new World();
-			world.Number = item.Key;
-			world.Levels = new List<Level>();
-			
-			foreach (var level in item.OrderBy(i => i.Number))
+		    var world = new World
+		                    {
+		                        Number = item.Key, 
+                                Levels = new List<Level>()
+		                    };
+
+		    foreach (var level in item.OrderBy(i => i.Number))
 			{
 				world.Levels.Add(level);
 			}
@@ -249,10 +253,8 @@ public class Global : MonoBehaviour
 		}
 		
 		public static float ScaleValue(float value, float oldMin, float oldMax, float newMin, float newMax)
-        {
-            float scaledValue;
-            scaledValue = newMin + (value - oldMin) / (oldMax - oldMin) * (newMax - newMin);
-            return scaledValue;
-        }
+		{
+		    return newMin + (value - oldMin) / (oldMax - oldMin) * (newMax - newMin);
+		}
 	}
 }
