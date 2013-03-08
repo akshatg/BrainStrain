@@ -31,7 +31,7 @@ public class Level
 	
 	public byte[,,] GetData()
 	{
-		var textAsset = Resources.Load("Levels/World " + this.World + "/" + this.FileName, typeof(TextAsset)) as TextAsset;
+		var textAsset = Resources.Load("Levels/World " + World + "/" + FileName, typeof(TextAsset)) as TextAsset;
 		return Parser.ParseFromString(textAsset.text);
 	}
 	
@@ -126,7 +126,7 @@ public class Global : MonoBehaviour
 	{
 		using(StreamReader sr = new StreamReader(filename))
 		{
-            var dictionary = (Dictionary<string, object>)Json.Deserialize(sr.ReadToEnd());
+            var dictionary = Json.Deserialize(sr.ReadToEnd()) as Dictionary<string, object>;
 			
 			Localization.Language = (SystemLanguage)(int)(long)dictionary["Language"];
 			Musician.MusicOn = (bool)dictionary["Music"];
