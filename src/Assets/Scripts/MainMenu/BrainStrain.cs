@@ -31,28 +31,4 @@ public class BrainStrain : Spawner {
 		
 		return newObject;
 	}
-	
-	private char[,,] LoadBrainStrain()
-	{
-		var result = new char[25,9,31];
-		for(var zz = 0; zz < result.GetLength(2); zz++)
-		for(var yy = 0; yy < result.GetLength(1); yy++)
-		for(var xx = 0; xx < result.GetLength(0); xx++)
-		{
-			result[xx,yy,zz] = '_';
-		}
-		
-		var jsonString = ((TextAsset) Resources.Load("BrainStrain")).text;
-		
-		var list = (List<object>)Json.Deserialize(jsonString);
-		foreach(var item in list)
-		{
-            var dict = (Dictionary<string, object>)item;
-			var x = (int)(long)dict["x"];
-			var y = (int)(long)dict["y"];
-			var z = (int)(long)dict["z"];
-			result[x,y,z] = '0';
-		}
-		return result;
-	}
 }
