@@ -35,7 +35,6 @@ public class BrainStrain : MonoBehaviour {
 		}
 	}
 	
-	private const byte _ = byte.MaxValue;
 	private Block[,,] blocks;
 	
 	// Use this for initialization
@@ -59,14 +58,14 @@ public class BrainStrain : MonoBehaviour {
 	{
 	}
 	
-	private byte[,,] LoadBrainStrain()
+	private char[,,] LoadBrainStrain()
 	{
-		var result = new byte[25,9,31];
+		var result = new char[25,9,31];
 		for(var zz = 0; zz < result.GetLength(2); zz++)
 		for(var yy = 0; yy < result.GetLength(1); yy++)
 		for(var xx = 0; xx < result.GetLength(0); xx++)
 		{
-			result[xx,yy,zz] = _;
+			result[xx,yy,zz] = '_';
 		}
 		
 		var jsonString = ((TextAsset) Resources.Load("BrainStrain")).text;
@@ -75,31 +74,30 @@ public class BrainStrain : MonoBehaviour {
 		foreach(var item in list)
 		{
             var dict = (Dictionary<string, object>)item;
-			var x = (byte)(long)dict["x"];
-			var y = (byte)(long)dict["y"];
-			var z = (byte)(long)dict["z"];
-			result[x,y,z] = 0;
+			var x = (int)(long)dict["x"];
+			var y = (int)(long)dict["y"];
+			var z = (int)(long)dict["z"];
+			result[x,y,z] = '0';
 		}
-		Resources.UnloadUnusedAssets();
 		return result;
 	}
 	
-	private void LoadLevel(byte[,,] level)
+	private void LoadLevel(char[,,] level)
 	{
 		blocks = new Block[level.GetLength(0),level.GetLength(1),level.GetLength(2)];
 		for(var z = 0; z < level.GetLength(2); z++)
 		for(var y = 0; y < level.GetLength(1); y++)
 		for(var x = 0; x < level.GetLength(0); x++)
 		{
-			var number = level[x,y,z];
-			if(number != _)
+			var token = level[x,y,z];
+			if(token != '_')
 			{
-				CreateBlock(x, y, z, number);
+				CreateBlock(x, y, z, token);
 			}
 		}	
 	}
 	
-	public GameObject CreateBlock(int x, int y, int z, int number)
+	public GameObject CreateBlock(int x, int y, int z, char token)
 	{
 		var scale = BlockPrefab.transform.localScale;
 		var posX = x * scale.x;
@@ -108,13 +106,31 @@ public class BrainStrain : MonoBehaviour {
 		var posVect = Vector3.Scale(new Vector3(posZ, posY, posX), scale);
 		
 		var newObject = (GameObject)Instantiate(BlockPrefab, posVect, BlockPrefab.transform.rotation);
-		newObject.name = "Block " + number;
+		newObject.name = "Block " + token;
 		newObject.transform.parent = GameObject.Find("Brain Strain").transform;
-			
-		Block newBlock = newObject.GetComponent<Block>();
-		newBlock.Number = number;
 		
-		blocks[x,y,z] = newBlock;
+		Block blockComponent = newObject.GetComponent<Block>();
+		blockComponent.Id = Spawner.IndexToId(new Vector3(x,y,z));
+		
+		var component = newObject.AddComponent(Block.FromToken(token).GetType()) as Block;
+		
+		component.Textures = blockComponent.Textures;
+		component.Palete = blockComponent.Palete;
+		
+		UnityEngine.Object.Destroy(blockComponent);
+		
+		if(component is PlainBlock)
+		{
+			var block = component as PlainBlock;
+			blocks[x,y,z] = block;
+		}
+		else if(component is DigitBlock)
+		{
+			var block = component as DigitBlock;
+			block.Number = (int)char.GetNumericValue(token);
+			blocks[x,y,z] = block;
+		}
+		
 		return newObject;
 	}
 }

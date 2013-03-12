@@ -1,7 +1,5 @@
 ﻿<RecentFiles>
   <RecentFiles>
-    <File id="4CFFDA30-0E63-039E-0DCA-DAC117CE2649/d:Assets/d:Scripts/f:Parser.cs" caret="2846" fromTop="16" />
-    <File id="4CFFDA30-0E63-039E-0DCA-DAC117CE2649/d:Assets/d:Scripts/f:Musician.cs" caret="1159" fromTop="17" />
     <File id="4CFFDA30-0E63-039E-0DCA-DAC117CE2649/d:Assets/d:Scripts/d:MainMenu/f:BrainStrain.cs" caret="1001" fromTop="16" />
     <File id="4CFFDA30-0E63-039E-0DCA-DAC117CE2649/d:Assets/d:Scripts/d:Game/f:Spawner.cs" caret="1305" fromTop="5" />
     <File id="4CFFDA30-0E63-039E-0DCA-DAC117CE2649/d:Assets/d:Scripts/f:BaseGUI.cs" caret="1847" fromTop="21" />
@@ -14,12 +12,11 @@
     <File id="4CFFDA30-0E63-039E-0DCA-DAC117CE2649/d:Assets/d:Resources/d:Localization/f:Bulgarian.txt" caret="0" fromTop="0" />
     <File id="4CFFDA30-0E63-039E-0DCA-DAC117CE2649/d:Assets/d:Resources/f:BrainStrain.txt" caret="0" fromTop="0" />
     <File id="4CFFDA30-0E63-039E-0DCA-DAC117CE2649/d:Assets/d:Resources/d:Levels/d:World 1/f:1_1_Singles.txt" caret="0" fromTop="0" />
-    <File id="4CFFDA30-0E63-039E-0DCA-DAC117CE2649/d:Assets/d:Scripts/f:Global.cs" caret="2417" fromTop="14" />
+    <File id="4CFFDA30-0E63-039E-0DCA-DAC117CE2649/d:Assets/d:Scripts/f:Global.cs" caret="1767" fromTop="12" />
+    <File id="4CFFDA30-0E63-039E-0DCA-DAC117CE2649/d:Assets/d:Scripts/f:Musician.cs" caret="886" fromTop="13" />
+    <File id="4CFFDA30-0E63-039E-0DCA-DAC117CE2649/d:Assets/d:Scripts/f:Parser.cs" caret="3060" fromTop="26" />
   </RecentFiles>
   <RecentEdits>
-    <File id="4CFFDA30-0E63-039E-0DCA-DAC117CE2649/d:Assets/d:Scripts/d:MainMenu/f:BrainStrain.cs" caret="1286" fromTop="16" />
-    <File id="4CFFDA30-0E63-039E-0DCA-DAC117CE2649/d:Assets/d:Scripts/d:Game/f:Spawner.cs" caret="485" fromTop="17" />
-    <File id="4CFFDA30-0E63-039E-0DCA-DAC117CE2649/d:Assets/d:Scripts/d:Game/f:Spawner.cs" caret="1467" fromTop="19" />
     <File id="4CFFDA30-0E63-039E-0DCA-DAC117CE2649/d:Assets/d:Scripts/d:Game/f:Spawner.cs" caret="3003" fromTop="16" />
     <File id="4CFFDA30-0E63-039E-0DCA-DAC117CE2649/d:Assets/d:Scripts/d:Game/f:Spawner.cs" caret="4725" fromTop="14" />
     <File id="4CFFDA30-0E63-039E-0DCA-DAC117CE2649/d:Assets/d:Scripts/d:Game/f:Spawner.cs" caret="4725" fromTop="14" />
@@ -45,7 +42,10 @@
     <File id="4CFFDA30-0E63-039E-0DCA-DAC117CE2649/d:Assets/d:Scripts/f:Global.cs" caret="5124" fromTop="19" />
     <File id="4CFFDA30-0E63-039E-0DCA-DAC117CE2649/d:Assets/d:Scripts/f:Global.cs" caret="5940" fromTop="17" />
     <File id="4CFFDA30-0E63-039E-0DCA-DAC117CE2649/d:Assets/d:Scripts/f:Global.cs" caret="5728" fromTop="106" />
-    <File id="4CFFDA30-0E63-039E-0DCA-DAC117CE2649/d:Assets/d:Scripts/f:Global.cs" caret="565" fromTop="20" />
     <File id="4CFFDA30-0E63-039E-0DCA-DAC117CE2649/d:Assets/d:Scripts/f:Global.cs" caret="2581" fromTop="20" />
+    <File id="4CFFDA30-0E63-039E-0DCA-DAC117CE2649/d:Assets/d:Scripts/f:Global.cs" caret="556" fromTop="15" />
+    <File id="4CFFDA30-0E63-039E-0DCA-DAC117CE2649/d:Assets/d:Scripts/f:Musician.cs" caret="862" fromTop="12" />
+    <File id="4CFFDA30-0E63-039E-0DCA-DAC117CE2649/d:Assets/d:Scripts/f:Parser.cs" caret="1535" fromTop="12" />
+    <File id="4CFFDA30-0E63-039E-0DCA-DAC117CE2649/d:Assets/d:Scripts/f:Parser.cs" caret="3060" fromTop="26" />
   </RecentEdits>
 </RecentFiles>

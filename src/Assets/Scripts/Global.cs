@@ -29,7 +29,7 @@ public class Level
 		}
 	}
 	
-	public byte[,,] GetData()
+	public char[,,] GetData()
 	{
 		var textAsset = Resources.Load("Levels/World " + World + "/" + FileName, typeof(TextAsset)) as TextAsset;
 		return Parser.ParseFromString(textAsset.text);

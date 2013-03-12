@@ -116,7 +116,7 @@ public class Spawner : MonoBehaviour {
 		}
 	}
 	
-	public void LoadLevel(byte[,,] level)
+	public void LoadLevel(char[,,] level)
 	{
 		DestroyLevel();
 		blocks = new Block[level.GetLength(0),level.GetLength(1),level.GetLength(2)];
@@ -124,10 +124,10 @@ public class Spawner : MonoBehaviour {
 		for(var y = 0; y < level.GetLength(1); y++)
 		for(var x = 0; x < level.GetLength(0); x++)
 		{
-			var number = level[x,y,z];
-			if(number != byte.MaxValue)
+			var token = level[x,y,z];
+			if(token != '_')
 			{
-				CreateBlock(x, y, z, number);
+				CreateBlock(x, y, z, token);
 			}
 		}
 		LevelSolved = false;
@@ -177,7 +177,7 @@ public class Spawner : MonoBehaviour {
 	{
 		if(undoStack.Count > 0)
 		{
-			CreateBlock(undoStack.Pop(), 0);
+			CreateBlock(undoStack.Pop(), '0');
 			UndosLeft--;
 			ValidateLevel();
 			return true;
@@ -185,13 +185,13 @@ public class Spawner : MonoBehaviour {
 		return false;
 	}
 	
-	public GameObject CreateBlock(int id, int number)
+	public GameObject CreateBlock(int id, char token)
 	{
 		var index = IdToIndex(id);
-		return CreateBlock((int)index.x, (int)index.y, (int)index.z, number);
+		return CreateBlock((int)index.x, (int)index.y, (int)index.z, token);
 	}
 	
-	public GameObject CreateBlock(int x, int y, int z, int number)
+	public GameObject CreateBlock(int x, int y, int z, char token)
 	{
 		var scale = BlockPrefab.transform.localScale;
 		var posX = x * scale.x;
@@ -200,14 +200,32 @@ public class Spawner : MonoBehaviour {
 		var posVect = Vector3.Scale(new Vector3(posZ, posY, posX), scale);
 		
 		var newObject = (GameObject)Instantiate(BlockPrefab, posVect, BlockPrefab.transform.rotation);
-		newObject.name = "Block " + number;
+		newObject.name = "Block " + token;
 		newObject.transform.parent = GameObject.Find("Level").transform;
-			
-		Block newBlock = newObject.GetComponent<Block>();
-		newBlock.Number = number;
-		newBlock.Id = IndexToId(new Vector3(x,y,z));
 		
-		blocks[x,y,z] = newBlock;
+		Block blockComponent = newObject.GetComponent<Block>();
+		blockComponent.Id = IndexToId(new Vector3(x,y,z));
+		
+		var component = newObject.AddComponent(Block.FromToken(token).GetType()) as Block;
+		
+		component.Textures = blockComponent.Textures;
+		component.Palete = blockComponent.Palete;
+		component.Id = blockComponent.Id;
+		
+		if(component is PlainBlock)
+		{
+			var block = component as PlainBlock;
+			blocks[x,y,z] = block;
+		}
+		else if(component is DigitBlock)
+		{
+			var block = component as DigitBlock;
+			block.Number = (int)char.GetNumericValue(token);
+			blocks[x,y,z] = block;
+		}
+		
+		//comment this \/
+		UnityEngine.Object.Destroy(blockComponent);
 		return newObject;
 	}
 	
@@ -235,7 +253,7 @@ public class Spawner : MonoBehaviour {
 		const int minUndos = 1;
 		const int maxUndos = 15;
 		
-		var count = BlocksCount(b => b != null && !b.IsDiggit);
+		var count = BlocksCount(b => b != null && b is PlainBlock);
 		StartingUndos =  Mathf.Clamp(count / 5, minUndos, maxUndos);
 		
 		UndosLeft = StartingUndos;
@@ -258,19 +276,20 @@ public class Spawner : MonoBehaviour {
 	{
 		foreach (var block in blocks)
 		{
-			if(block != null && block.IsDiggit)
+			if(block != null && block is DigitBlock)
 			{
+				var digitBlock = block as DigitBlock;
 				var sequence = new List<Block>();
-				var sequenceCount = CountSeparatedFrom(block, sequence);
+				var sequenceCount = CountSeparatedFrom(digitBlock, sequence);
 				
 				State state = State.Unsolved;
 				
 				//if and only if the sequence contains exactly one diggit the sequence is valid
-				if(sequence.Count(b => b.IsDiggit) == 1)
+				if(sequence.Count(b => b is DigitBlock) == 1)
 				{
-					if(sequenceCount == block.Number)
+					if(sequenceCount == digitBlock.Number)
 						state = State.Solved;
-					else if(sequenceCount < block.Number)
+					else if(sequenceCount < digitBlock.Number)
 						state = State.Wrong;
 					else
 						state = State.Unsolved;
@@ -285,7 +304,7 @@ public class Spawner : MonoBehaviour {
 	}
 	
 	//use this instead
-	private int CountSeparatedFrom(Block block, List<Block> sequence)
+	private int CountSeparatedFrom(DigitBlock block, List<Block> sequence)
 	{
 		return CountSeparatedFrom(block.Id, sequence, block.Number);
 	}
@@ -293,6 +312,7 @@ public class Spawner : MonoBehaviour {
 	//I am proud of this :D RECURSION!!!
 	private int CountSeparatedFrom(int blockId, List<Block> sequence, int targetCount)
 	{
+		//this is for calculation optimization so that it doesn't count the whole array for every digit block
 		if(sequence.Count > targetCount)
 		{
 			return 0;

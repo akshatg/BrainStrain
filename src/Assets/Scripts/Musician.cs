@@ -71,7 +71,7 @@ public class Musician : MonoBehaviour
 	{
 		get
 		{
-			return masterVolume;	
+			return masterVolume;
 		}
 		set
 		{

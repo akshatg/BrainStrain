@@ -4,7 +4,7 @@ using System.IO;
 
 public static class Parser
 {
-	public static string SerializeToString(byte[,,] array)
+	public static string SerializeToString(char[,,] array)
 	{
 		var builder = new StringBuilder();
 		builder.AppendLine("{");
@@ -27,7 +27,7 @@ public static class Parser
 		return builder.ToString();
 	}
 	
-	public static void SerializeToFile(byte[,,] array, string path)
+	public static void SerializeToFile(char[,,] array, string path)
 	{
 		string str = SerializeToString(array);
 		using(TextWriter tw = new StreamWriter(path))
@@ -36,7 +36,7 @@ public static class Parser
 		}
 	}
 	
-	public static byte[,,] ParseFromString(string str)
+	public static char[,,] ParseFromString(string str)
 	{
 		RemoveWhiteSpace(ref str);
 		RemoveComasAtTheEnd(ref str);
@@ -44,12 +44,12 @@ public static class Parser
 		var x = (int)length.x;
 		var y = (int)length.y;
 		var z = (int)length.z;
-		byte[,,] array = new byte[x,y,z];
+		char[,,] array = new char[x,y,z];
 		FillArray(array, str);
 		return array;
     }
 	
-	public static byte[,,] ParseFromFile(string path)
+	public static char[,,] ParseFromFile(string path)
 	{
 		string str;
 		using(TextReader reader = new StreamReader(path))
@@ -109,7 +109,7 @@ public static class Parser
 		return length + Vector3.one;
 	}
 	
-	private static void FillArray(byte[,,] array, string str)
+	private static void FillArray(char[,,] array, string str)
 	{
 		int coordinate = -1;
 		Vector3 vect = Vector3.zero;
@@ -129,22 +129,10 @@ public static class Parser
 					vect[coordinate]++;
 					break;
 				default:
-					byte number = 0;
-					if(char.IsNumber(token))
-					{
-						number = byte.Parse(token.ToString());
-					}
-					else if(token == '_')
-					{
-						number = byte.MaxValue;
-					}
-					else
-						break;
-					
 					var x = (int)vect.x;
 					var y = (int)vect.y;
 					var z = (int)vect.z;
-					array[x,y,z] = number;
+					array[x,y,z] = token;
 					break;
 			}
 		}

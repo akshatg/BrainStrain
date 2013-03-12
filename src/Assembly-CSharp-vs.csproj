@@ -46,7 +46,9 @@
   <ItemGroup>
      <Compile Include="Assets\Scripts\BaseGUI.cs" />
      <Compile Include="Assets\Scripts\CameraControl.cs" />
-     <Compile Include="Assets\Scripts\Game\Block.cs" />
+     <Compile Include="Assets\Scripts\Game\Blocks\Block.cs" />
+     <Compile Include="Assets\Scripts\Game\Blocks\DigitBlock.cs" />
+     <Compile Include="Assets\Scripts\Game\Blocks\PlainBlock.cs" />
      <Compile Include="Assets\Scripts\Game\LevelGUI.cs" />
      <Compile Include="Assets\Scripts\Game\Spawner.cs" />
      <Compile Include="Assets\Scripts\Global.cs" />
