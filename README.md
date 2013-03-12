@@ -16,13 +16,12 @@ You can download the most recen version of the game builded in the bin forlder d
 
 ##TODO
 [High priority]
+- Add block type to ID [0%] <-
 - Clen up dirty code mess
-  - GUI classes need lots of cleanup [50%]
-  - Make Block class hierarchy instead of using one class(this will make adding new blocks a lot easyer) [0%] <-
-  - Merge MainMenu and Game scenes for better stuff [0%] <-
-  - Make level load to `char[,,]` array instead of `byte[,,]` array <-
-- Make the Parser to be able to serialize(save) a level in a file (not tested)[90%]
-- Add sounds
+  - GUI classes need lots of cleanup [50%] <-
+  - Clean up Block class hierarchy [80%] <-
+- Add sounds]
+  - Fix Android bug when loading settings file <-
   - Create Audio class for playing everything(don't use Global) [90%]
   - Make the mute buttons available in-game and redesign the Audio settings GUI [20%]
   - Main soundtrack (temp placeholder) [90%]
@@ -30,7 +29,6 @@ You can download the most recen version of the game builded in the bin forlder d
   - Undo block sfx [0%]
   - Level complete sfx [0%]
   - others that I can't think of right now :D
-- Maybe add some encryption to save files (but later when everything is stable) [0%]
 [Llow priority]
 - Add Hilbert curve cube level [0%]
 - Make random level generation [0%]
@@ -39,6 +37,7 @@ You can download the most recen version of the game builded in the bin forlder d
   - 'portal' blocks [0%]
   - TNT block [0%]
   - others [0%]
+- Maybe add some encryption to save files (but later when everything is stable) [0%]
 
 *full TODO [here][todo]*
 

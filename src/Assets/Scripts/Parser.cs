@@ -4,6 +4,30 @@ using System.IO;
 
 public static class Parser
 {
+	public static string SerializeToString(Block[,,] array)
+	{
+		var charArray = new char[array.GetLength(0),array.GetLength(1),array.GetLength(2)];
+		for(int z = 0; z < array.GetLength(2); z++)
+		{
+			for(int y = 0; y < array.GetLength(1); y++)
+			{
+				for(int x = 0; x < array.GetLength(0); x++)
+				{
+					if(array[x,y,z] != null)
+					{
+						charArray[x,y,z] = array[x,y,z].ToChar();
+					}
+					else
+					{
+						charArray[x,y,z] = '_';	
+					}
+				}
+			}
+		}
+		
+		return SerializeToString(charArray);
+	}
+	
 	public static string SerializeToString(char[,,] array)
 	{
 		var builder = new StringBuilder();
@@ -16,9 +40,9 @@ public static class Parser
 				builder.Append("\t\t{");
 				for(int x = 0; x < array.GetLength(2) - 1; x++)
 				{
-					builder.AppendFormat("{0},", array[x,y,z]);
+					builder.AppendFormat("{0},", array[z,y,x]);
 				}
-				builder.AppendFormat("{0}", array[array.GetLength(2) - 1,y,z]);
+				builder.AppendFormat("{0}", array[z,y,array.GetLength(2) - 1]);
 				builder.AppendLine("},");
 			}
 			builder.AppendLine("\t},");

@@ -80,11 +80,11 @@ public class Spawner : MonoBehaviour {
 	
 	private Global _global;
 	private Tool currentTool;
-	private Block[,,] blocks;
+	protected Block[,,] blocks;
 	private Stack<int> undoStack;
 	
 	// Use this for initialization
-	void Start ()
+	void Start()
 	{
 		_global = GameObject.Find("Global").GetComponent<Global>();
 		var level = _global.CurrentLevel.GetData();
@@ -191,7 +191,7 @@ public class Spawner : MonoBehaviour {
 		return CreateBlock((int)index.x, (int)index.y, (int)index.z, token);
 	}
 	
-	public GameObject CreateBlock(int x, int y, int z, char token)
+	public virtual GameObject CreateBlock(int x, int y, int z, char token)
 	{
 		var scale = BlockPrefab.transform.localScale;
 		var posX = x * scale.x;
@@ -205,27 +205,8 @@ public class Spawner : MonoBehaviour {
 		
 		Block blockComponent = newObject.GetComponent<Block>();
 		blockComponent.Id = IndexToId(new Vector3(x,y,z));
+		blocks[x,y,z] = blockComponent.AddBlockFromToken(token);
 		
-		var component = newObject.AddComponent(Block.FromToken(token).GetType()) as Block;
-		
-		component.Textures = blockComponent.Textures;
-		component.Palete = blockComponent.Palete;
-		component.Id = blockComponent.Id;
-		
-		if(component is PlainBlock)
-		{
-			var block = component as PlainBlock;
-			blocks[x,y,z] = block;
-		}
-		else if(component is DigitBlock)
-		{
-			var block = component as DigitBlock;
-			block.Number = (int)char.GetNumericValue(token);
-			blocks[x,y,z] = block;
-		}
-		
-		//comment this \/
-		UnityEngine.Object.Destroy(blockComponent);
 		return newObject;
 	}
 	

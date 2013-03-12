@@ -11,6 +11,8 @@ public enum State
 
 public class Block : MonoBehaviour
 {	
+	public int Id_;
+	
 	public Texture2D[] Textures;
 	public Color[] Palete;
 	
@@ -63,6 +65,14 @@ public class Block : MonoBehaviour
 		}
 	}
 	
+	public virtual char Char
+	{
+		get
+		{
+			return ' ';
+		}
+	}
+	
 	protected Material material;
 	protected Collider colider;
 	
@@ -85,6 +95,7 @@ public class Block : MonoBehaviour
 	
 	void OnMouseUpAsButton()
 	{
+		Id_ = Id;
 		OnInteract();
 	}
 	
@@ -97,25 +108,47 @@ public class Block : MonoBehaviour
 		}
 	}
 	
-	protected virtual void StateChanged(State state)
+	protected virtual void StateChanged(State state){ }
+	protected virtual void MarkedChanged(bool marked){ }
+	protected virtual void InspectedChanged(bool inspected){ }
+	
+	public char ToChar()
 	{
-	}
-	protected virtual void MarkedChanged(bool marked)
-	{
-	}
-	protected virtual void InspectedChanged(bool inspected)
-	{
+		return this.Char;
 	}
 	
-	public static Block FromToken(char token)
+	public Block AddBlockFromToken(char token)
+	{		
+		Block newBlock = gameObject.AddComponent(BlockTypeFromToken(token)) as Block;
+		
+		newBlock.Id = this.Id;
+		newBlock.Textures = this.Textures;
+		newBlock.Palete = this.Palete;
+		
+		if(newBlock is PlainBlock)
+		{
+			var plainBlock = newBlock as PlainBlock;
+			//do plainblock spesific here
+		}
+		else if(newBlock is DigitBlock)
+		{
+			var digitBlock = newBlock as DigitBlock;
+			digitBlock.Number = (int)char.GetNumericValue(token);
+		}
+		
+		UnityEngine.Object.Destroy(this);
+		return newBlock;
+	}
+	
+	public static Type BlockTypeFromToken(char token)
 	{
 		if(token == '0')
 		{
-			return new PlainBlock();
+			return typeof(PlainBlock);
 		}
 		else if(char.IsDigit(token))
 		{
-			return new DigitBlock();
+			return typeof(DigitBlock);
 		}
 		else
 		{

@@ -5,6 +5,7 @@
 	"world4" : "Professional",
 	"world5" : "Expert",
 	"world6" : "Master",
+	
 	"Singles" : "Singles",
 	"Twos" : "Twos",
 	"The Line" : "The Line",
@@ -39,6 +40,7 @@
 	"Sword" : "Sword",
 	"Smiley" : "Smiley",
 	"Book" : "Book",
+
 	"play" : "Play",
 	"lang" : "Language",
 	"snd" : "Audio",

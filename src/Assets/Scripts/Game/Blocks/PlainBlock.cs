@@ -3,6 +3,14 @@ using System.Collections;
 
 public class PlainBlock : Block
 {
+	public override char Char
+	{
+		get
+		{
+			return '0';
+		}
+	}
+	
 	protected override void Start()
 	{
 		base.Start();
