@@ -92,15 +92,22 @@ public class Global : MonoBehaviour
 		LevelsFile = Application.persistentDataPath + "/levels_data.txt";
 		SettingsFile = Application.persistentDataPath + "/settings_data.txt";
 		
-		if(File.Exists(SettingsFile))
+		try
 		{
-			LoadSettingsData(SettingsFile);
+			if(File.Exists(SettingsFile))
+			{
+				LoadSettingsData(SettingsFile);
+			}
+			
+			CreateWorlds();
+			if(File.Exists(LevelsFile))
+			{
+				LoadLevelData(LevelsFile);
+			}
 		}
-		
-		CreateWorlds();
-		if(File.Exists(LevelsFile))
+		catch(IOException ex)
 		{
-			LoadLevelData(LevelsFile);
+			throw new Exception("Problem with save files!", ex);
 		}
 		Application.LoadLevel("MainMenu");
 	}

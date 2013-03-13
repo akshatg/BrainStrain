@@ -16,11 +16,12 @@ You can download the most recen version of the game builded in the bin forlder d
 
 ##TODO
 [High priority]
-- Add block type to ID [0%] <-
+- Make random level generation [0%] <-
+  - Fix Android bug when loading settings file [0%] <-
+- Add block type to ID [0%]
 - Clen up dirty code mess
-  - Clean up Block class hierarchy [90%] <-
-- Add sounds]
-  - Fix Android bug when loading settings file <-
+  - Clean up Block class hierarchy [90%]
+- Add sounds
   - Create Audio class for playing everything(don't use Global) [90%]
   - Make the mute buttons available in-game and redesign the Audio settings GUI [20%]
   - Main soundtrack (temp placeholder) [90%]
@@ -29,7 +30,6 @@ You can download the most recen version of the game builded in the bin forlder d
   - Level complete sfx [0%]
   - others that I can't think of right now :D
 [Llow priority]
-- Make random level generation [0%]
 - Add Hilbert curve cube level [0%]
 - Make level creator [0%]
 - Add more blocks

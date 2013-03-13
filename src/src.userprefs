@@ -1,14 +1,11 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Game\Spawner.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Game\LevelGenerator.cs">
     <Files>
-      <File FileName="Assets\Scripts\Parser.cs" Line="16" Column="29" />
-      <File FileName="Assets\Scripts\Global.cs" Line="31" Column="2" />
-      <File FileName="Assets\Scripts\CameraControl.cs" Line="65" Column="24" />
-      <File FileName="Assets\Scripts\Game\Block.cs" Line="112" Column="63" />
-      <File FileName="Assets\Scripts\BaseGUI.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\Game\Spawner.cs" Line="206" Column="65" />
-      <File FileName="Assets\Scripts\Game\LevelGUI.cs" Line="153" Column="22" />
+      <File FileName="Assets\Scripts\Global.cs" Line="95" Column="6" />
+      <File FileName="Assets\Scripts\Game\Spawner.cs" Line="161" Column="34" />
+      <File FileName="Assets\Scripts\MainMenu\BrainStrain.cs" Line="19" Column="26" />
+      <File FileName="Assets\Scripts\Game\LevelGenerator.cs" Line="16" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
