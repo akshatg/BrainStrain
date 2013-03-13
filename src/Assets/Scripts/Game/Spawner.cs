@@ -143,9 +143,21 @@ public class Spawner : MonoBehaviour {
 					Destroy(block.gameObject);
 	}
 	
+	public void DestroyBlock(int id)
+	{
+		var index = IdToIndex(id);
+		var block = blocks[(int)index.x,(int)index.y,(int)index.z];
+		
+		Musician.PlaySound(Musician.Sounds.BlockHit, block.transform.position);
+		
+		undoStack.Push(block.Id);
+		Destroy(block.gameObject);
+		blocks[(int)index.x,(int)index.y,(int)index.z] = null;
+	}
+	
 	public void RestartLevel()
 	{
-		while(UndoBlock()){}
+		while(UndoBlock()){ }
 	    foreach(var block in blocks)
 			if(block != null)
 				block.Marked = false;
@@ -163,11 +175,9 @@ public class Spawner : MonoBehaviour {
 		}
 		else if(CurrentTool == Tool.Block)
 		{
-			if(!block.Marked)
+			if(block.Marked == false && block is PlainBlock)
 			{
-				undoStack.Push(block.Id);
-				Destroy(block.gameObject);
-				blocks[(int)index.x, (int)index.y, (int)index.z] = null;
+				DestroyBlock(id);
 			}
 		}
 		ValidateLevel();

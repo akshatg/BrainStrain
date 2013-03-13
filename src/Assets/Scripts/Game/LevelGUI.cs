@@ -116,7 +116,7 @@ public class LevelGUI : BaseGUI {
 		_global.CurrentLevel.Completed = true;
 		var stars = NumberOfStars();
 		if(stars > _global.CurrentLevel.Stars)
-			_global.	CurrentLevel.Stars = stars;
+			_global.CurrentLevel.Stars = stars;
 		
 		GUILayout.BeginHorizontal();
 		GUILayout.FlexibleSpace();

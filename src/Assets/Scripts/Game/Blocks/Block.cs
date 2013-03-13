@@ -11,8 +11,6 @@ public enum State
 
 public class Block : MonoBehaviour
 {	
-	public int Id_;
-	
 	public Texture2D[] Textures;
 	public Color[] Palete;
 	
@@ -95,7 +93,6 @@ public class Block : MonoBehaviour
 	
 	void OnMouseUpAsButton()
 	{
-		Id_ = Id;
 		OnInteract();
 	}
 	
@@ -111,6 +108,7 @@ public class Block : MonoBehaviour
 	protected virtual void StateChanged(State state){ }
 	protected virtual void MarkedChanged(bool marked){ }
 	protected virtual void InspectedChanged(bool inspected){ }
+	protected virtual void InitFromToken(char token){ }
 	
 	public char ToChar()
 	{
@@ -120,23 +118,11 @@ public class Block : MonoBehaviour
 	public Block AddBlockFromToken(char token)
 	{		
 		Block newBlock = gameObject.AddComponent(BlockTypeFromToken(token)) as Block;
-		
 		newBlock.Id = this.Id;
 		newBlock.Textures = this.Textures;
 		newBlock.Palete = this.Palete;
-		
-		if(newBlock is PlainBlock)
-		{
-			var plainBlock = newBlock as PlainBlock;
-			//do plainblock spesific here
-		}
-		else if(newBlock is DigitBlock)
-		{
-			var digitBlock = newBlock as DigitBlock;
-			digitBlock.Number = (int)char.GetNumericValue(token);
-		}
-		
-		UnityEngine.Object.Destroy(this);
+		newBlock.InitFromToken(token);
+		UnityEngine.Object.Destroy(this); //get rid of parent object
 		return newBlock;
 	}
 	

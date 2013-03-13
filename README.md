@@ -18,8 +18,7 @@ You can download the most recen version of the game builded in the bin forlder d
 [High priority]
 - Add block type to ID [0%] <-
 - Clen up dirty code mess
-  - GUI classes need lots of cleanup [50%] <-
-  - Clean up Block class hierarchy [80%] <-
+  - Clean up Block class hierarchy [90%] <-
 - Add sounds]
   - Fix Android bug when loading settings file <-
   - Create Audio class for playing everything(don't use Global) [90%]
@@ -30,8 +29,8 @@ You can download the most recen version of the game builded in the bin forlder d
   - Level complete sfx [0%]
   - others that I can't think of right now :D
 [Llow priority]
-- Add Hilbert curve cube level [0%]
 - Make random level generation [0%]
+- Add Hilbert curve cube level [0%]
 - Make level creator [0%]
 - Add more blocks
   - 'portal' blocks [0%]

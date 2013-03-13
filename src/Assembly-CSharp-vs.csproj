@@ -50,6 +50,7 @@
      <Compile Include="Assets\Scripts\Game\Blocks\DigitBlock.cs" />
      <Compile Include="Assets\Scripts\Game\Blocks\PlainBlock.cs" />
      <Compile Include="Assets\Scripts\Game\LevelGUI.cs" />
+     <Compile Include="Assets\Scripts\Game\LevelGenerator.cs" />
      <Compile Include="Assets\Scripts\Game\Spawner.cs" />
      <Compile Include="Assets\Scripts\Global.cs" />
      <Compile Include="Assets\Scripts\Libs\MiniJSON.cs" />

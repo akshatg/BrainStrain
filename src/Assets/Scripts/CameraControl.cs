@@ -10,7 +10,6 @@ public class CameraControl : MonoBehaviour {
 		LevelComplete
 	}
 	
-	//public bool ControllByUser{ get; set; }
 	public CameraState State{get; set;}
 	public Vector3 RotationCenter;
 	public float MinDistance = 2.0f;

@@ -19,9 +19,9 @@ public class DigitBlock : Block
 		material.mainTexture = Textures[Number];
 	}
 	
-	protected override void OnInteract()
+	protected override void InitFromToken(char token)
 	{
-		//do nothing for now(ignore informing spawner)
+		Number = (int)char.GetNumericValue(token);
 	}
 	
 	protected override void StateChanged(State state)

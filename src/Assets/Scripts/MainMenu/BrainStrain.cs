@@ -23,7 +23,7 @@ public class BrainStrain : Spawner {
 		
 		var newObject = (GameObject)Instantiate(BlockPrefab, posVect, BlockPrefab.transform.rotation);
 		newObject.name = "Block " + token;
-		newObject.transform.parent = GameObject.Find("Level").transform;
+		newObject.transform.parent = GameObject.Find("BrainStrain").transform;
 		
 		Block blockComponent = newObject.GetComponent<Block>();
 		blockComponent.Id = IndexToId(new Vector3(x,y,z));

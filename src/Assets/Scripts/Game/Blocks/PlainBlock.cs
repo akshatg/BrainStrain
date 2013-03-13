@@ -17,12 +17,6 @@ public class PlainBlock : Block
 		material.mainTexture = Textures[0];
 	}
 	
-	protected override void OnInteract()
-	{
-		base.OnInteract();
-		Musician.PlaySound(Musician.Sounds.BlockHit, transform.position);
-	}
-	
 	protected override void StateChanged(State state)
 	{
 		material.color = Palete[(int)state];
@@ -33,20 +27,10 @@ public class PlainBlock : Block
 	{
 		if(State == State.Unsolved)
 		{
-			if(inspected)
-			{
-				var col = material.color;
-				col.a = 0.5f;
-				material.color = col;
-				colider.enabled = false;
-			}
-			else
-			{
-				var col = material.color;
-				col.a = 1f;
-				material.color = col;
-				colider.enabled = true;
-			}
+			var col = material.color;
+			col.a = inspected ? 0.5f : 1f;
+			material.color = col;
+			colider.enabled = !inspected;
 		}
 	}
 	
