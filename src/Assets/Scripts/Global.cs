@@ -89,6 +89,10 @@ public class Global : MonoBehaviour
 	// Use this for initialization
 	void Start()
 	{
+		// /!\ TEST AREA /!\
+		LevelGenerator.Chance = LevelGenerator.Chanses.Easy;
+		
+		
 		LevelsFile = Application.persistentDataPath + "/levels_data.txt";
 		SettingsFile = Application.persistentDataPath + "/settings_data.txt";
 		

@@ -16,7 +16,7 @@ You can download the most recen version of the game builded in the bin forlder d
 
 ##TODO
 [High priority]
-- Make random level generation [0%] <-
+- Make random level generation(basic idea done but not working and not tested at all) [40%] <-
   - Fix Android bug when loading settings file [0%] <-
 - Add block type to ID [0%]
 - Clen up dirty code mess
