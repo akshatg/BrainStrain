@@ -10,10 +10,11 @@ public static class LevelGenerator
 	
 	public class Chanses
 	{
-		public static readonly Chanses Easy;
-		public static readonly Chanses Medium;
-		public static readonly Chanses Hard;
-		public static readonly Chanses Insane;
+		public static Chanses Easy{ get; private set; }
+		public static Chanses Medium{ get; private set; }
+		public static Chanses Hard{ get; private set; }
+		public static Chanses Insane{ get; private set; }
+		public static Chanses[] Mostly{ get; private set; }
 		
 		static Chanses()
 		{
@@ -21,6 +22,15 @@ public static class LevelGenerator
 			Medium = new Chanses(40, 30, 20, 10);
 			Hard = new Chanses(10, 15, 20, 40, 10, 5);
 			Insane = new Chanses(5, 10, 15, 30, 15, 15, 10);
+			
+			Mostly = new Chanses[10];
+			Mostly[0] = new Chanses();
+			for(var i = 0; i < Mostly.Length - 1; i++)
+			{
+				var chances = new int[9];
+				chances[i] = 100;
+				Mostly[i + 1] = new Chanses(chances);
+			}
 		}
 		
 		private int[] chanses;
@@ -61,11 +71,21 @@ public static class LevelGenerator
 															Vector3.back
 														};
 	
-	private static Vector3 RandomDirection
+	private static List<Vector3> RandomDirections
 	{
 		get
 		{
-			return directions[Random.Range(0, directions.Length)];
+			var result = new List<Vector3>();
+			do
+			{
+				Vector3 dir;
+				do
+				{
+					dir = directions[Random.Range(0,directions.Length)];
+				}while(result.Contains(dir));
+				result.Add(dir);
+			}while(result.Count < directions.Length);
+			return result;
 		}
 	}
 	
@@ -132,11 +152,10 @@ public static class LevelGenerator
 		for(int y = 0; y < leny; y++)
 		for(int x = 0; x < lenx; x++)
 		{
-			if(mask[x,y,z] == '_')
-			{
-				resultLevel[x,y,z] = '_';
-				visited[x,y,z] = true;
-			}
+			//this is a bit odd but it works
+			var rule = mask[x,y,z] == '_';
+			resultLevel[x,y,z] = rule ? '_' : mask[x,y,z];
+			visited[x,y,z] = rule;
 		}
 	}
 	
@@ -158,43 +177,37 @@ public static class LevelGenerator
 			var number = Chance.RandomNumber;
 			var sequence = new List<Vector3>();
 			Permutate(number, pos, sequence);
+			number = sequence.Count;
+			
+			foreach(var p in sequence)
+			{
+				resultLevel[(int)p.x,(int)p.y,(int)p.z] = '0';
+				visited[(int)p.x,(int)p.y,(int)p.z] = true;
+				MarkNeighbours(p);
+			}
 			
 			//pick one random index in it and put a number
 			var index = sequence[Random.Range(0, number)];
+			Debug.Log("number = " + number);
 			resultLevel[(int)index.x,(int)index.y,(int)index.z] = char.Parse(number.ToString());
-			
-			foreach(var p in sequence)
-				MarkNeighbours(p);
 		}
 		return resultLevel;
 	}
 	
-	//this is the strangest peace of code i have ever written( recursion and 2 nested do loops
 	private static void Permutate(int number, Vector3 pos, List<Vector3> sequence)
 	{
-		if(number == 0)
+		if(sequence.Count == number || OutOfRange(pos) || visited[(int)pos.x,(int)pos.y,(int)pos.z] || sequence.Contains(pos))
 			return;
 		
-		//mark the current block as visited and add it to the sequence
-		resultLevel[(int)pos.x,(int)pos.y,(int)pos.z] = '0';
-		visited[(int)pos.x,(int)pos.y,(int)pos.z] = true;
 		sequence.Add(pos);
 		
-		//new random position
-		var newPos = Vector3.zero;
-		//HERE!!!! make a list of all directions then pick one random check if it is valid and if not remove it. If direction list is empty return
-		do
+		var dirs = RandomDirections;
+		for(int i = 0; i < dirs.Count; i++)
 		{
-			do
-			{
-				newPos = pos + RandomDirection;
-			//check if new position is in array range
-			}while(IsOutOfRange(newPos));
-		//check if it is already visited
-		}while(visited[(int)newPos.x,(int)newPos.y,(int)newPos.z]);
-		
-		//move on the next block
-		Permutate(number - 1, newPos, sequence);
+			if(sequence.Count == number)
+				break;
+			Permutate(number, pos + dirs[i], sequence);
+		}
 	}
 	
 	private static void MarkNeighbours(Vector3 pos)
@@ -202,17 +215,22 @@ public static class LevelGenerator
 		foreach(var dir in directions)
 		{
 			var id = pos + dir;
-			if(IsOutOfRange(id) == false)
+			if(InRange(id))
 			{
 				visited[(int)id.x,(int)id.y,(int)id.z] = true;
 			}
 		}
 	}
 	
-	private static bool IsOutOfRange(Vector3 pos)
+	private static bool InRange(Vector3 pos)
 	{
-		return pos.x < 0 || pos.x > lenx || 
-			   pos.y < 0 || pos.y > leny || 
-			   pos.z < 0 || pos.z > lenz;
+		return pos.x >= 0 && pos.x < lenx &&
+			   pos.y >= 0 && pos.y < leny &&
+			   pos.z >= 0 && pos.z < lenz;
+	}
+	
+	private static bool OutOfRange(Vector3 pos)
+	{
+		return !InRange(pos);
 	}
 }

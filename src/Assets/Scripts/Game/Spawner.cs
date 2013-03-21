@@ -159,8 +159,13 @@ public class Spawner : MonoBehaviour {
 	{
 		while(UndoBlock()){ }
 	    foreach(var block in blocks)
+		{
 			if(block != null)
+			{
 				block.Marked = false;
+				block.State = State.Unsolved;
+			}
+		}
 		ResetUndos();
 	}
 	
