@@ -6,6 +6,11 @@
 	"world5" : "Expert",
 	"world6" : "Master",
 	
+	"easy" : "Easy",
+	"medium" : "Medium",
+	"hard" : "Hard",
+	"insane" : "Insane",
+	
 	"Singles" : "Singles",
 	"Twos" : "Twos",
 	"The Line" : "The Line",
@@ -42,6 +47,8 @@
 	"Book" : "Book",
 
 	"play" : "Play",
+	"worlds" : "Campain",
+	"generatedlevel" : "Generated",
 	"lang" : "Language",
 	"snd" : "Audio",
 	"music": "Music",

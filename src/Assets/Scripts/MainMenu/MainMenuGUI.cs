@@ -8,9 +8,13 @@ using System.IO;
 public class MainMenuGUI : BaseGUI
 {
 	private Global _global;
+	private Vector2 scrollSettings;
 	private Vector2 scrollWorlds;
 	private Vector2 scrollLevels;
 	private World currentWorld;
+	
+	private int dificulty;
+	private string[] dificulties;
 
 	// Use this for initialization
 	protected override void Start()
@@ -33,12 +37,11 @@ public class MainMenuGUI : BaseGUI
 		#if UNITY_ANDROID || UNITY_IOS
 		//this is for the scrollers
 		if(Input.touchCount > 0)
-		{	
-			scrollWorlds.x -= Input.GetTouch(0).deltaPosition.x;
-			scrollWorlds.y += Input.GetTouch(0).deltaPosition.y;
-			
-			scrollLevels.x -= Input.GetTouch(0).deltaPosition.x;
-			scrollLevels.y += Input.GetTouch(0).deltaPosition.y;
+		{
+			var scroll = new Vector2(-Input.GetTouch(0).deltaPosition.x, Input.GetTouch(0).deltaPosition.y);
+			scrollSettings += scroll;
+			scrollWorlds += scroll;
+			scrollLevels += scroll;
 		}
 		#endif
 	}
@@ -62,6 +65,12 @@ public class MainMenuGUI : BaseGUI
 			case MenuState.Credits:
 				CreditsMenu();
 				break;
+			case MenuState.Modes:
+				ModesMenu();
+				break;
+			case MenuState.GeneratedLevel:
+				GeneratedLevelMenu();
+				break;
 			case MenuState.Worlds:
 				WorldMenu();
 				break;
@@ -84,7 +93,7 @@ public class MainMenuGUI : BaseGUI
 					GUILayout.FlexibleSpace();
 					if(GUILayout.Button(Localization.Get("play"), GUILayout.MaxWidth(w_2 / 3f), button_size_h))
 					{
-						_global.MenuState = MenuState.Worlds;
+						_global.MenuState = MenuState.Modes;
 					}
 					GUILayout.FlexibleSpace();
 					if(GUILayout.Button(Textures.Credits, button_size_w, button_size_h))
@@ -106,14 +115,15 @@ public class MainMenuGUI : BaseGUI
 		GUILayout.BeginHorizontal();
 			GUILayout.FlexibleSpace();
 			GUILayout.BeginVertical();
+			scrollLevels = GUILayout.BeginScrollView(scrollLevels);
 			GUILayout.FlexibleSpace();
 			GUILayout.Box(Localization.Get("lang"));
 			GUILayout.BeginHorizontal();
-			if(GUILayout.Button(en, button_width, button_height))
+			if(GUILayout.Button(en, button_height))
 			{
 				Localization.Language = SystemLanguage.English;
 			}
-			if(GUILayout.Button(bg, button_width, button_height))
+			if(GUILayout.Button(bg, button_height))
 			{
 				Localization.Language = SystemLanguage.Bulgarian;
 			}
@@ -121,13 +131,13 @@ public class MainMenuGUI : BaseGUI
 			GUILayout.Box(Localization.Get("snd"));
 			GUILayout.BeginHorizontal();
 			if(Musician.MusicOn)
-				Musician.MusicOn = !GUILayout.Button(Textures.MusicOn, button_width, button_height);
+				Musician.MusicOn = !GUILayout.Button(Textures.MusicOn, button_height);
 			else
-				Musician.MusicOn = GUILayout.Button(Textures.MusicOff, button_width, button_height);
+				Musician.MusicOn = GUILayout.Button(Textures.MusicOff, button_height);
 			if(Musician.SoundsOn)
-				Musician.SoundsOn = !GUILayout.Button(Textures.SoundsOn, button_width, button_height);
+				Musician.SoundsOn = !GUILayout.Button(Textures.SoundsOn, button_height);
 			else
-				Musician.SoundsOn = GUILayout.Button(Textures.SoundsOff, button_width, button_height);
+				Musician.SoundsOn = GUILayout.Button(Textures.SoundsOff, button_height);
 			GUILayout.EndHorizontal();
 			Musician.MusicVolume = VolumeSlider(Musician.MusicVolume, Localization.Get("music"));
 			Musician.SoundsVolume = VolumeSlider(Musician.SoundsVolume, Localization.Get("sounds"));
@@ -144,6 +154,7 @@ public class MainMenuGUI : BaseGUI
 					File.Delete(Global.LevelsFile);
 				}
 			}
+			GUILayout.EndScrollView();
 			GUILayout.FlexibleSpace();
 			GUILayout.EndVertical();
 			GUILayout.FlexibleSpace();
@@ -167,11 +178,81 @@ public class MainMenuGUI : BaseGUI
 		GUILayout.EndArea();
 	}
 	
+	private void ModesMenu()
+	{
+		BackButton();
+		GUILayout.BeginArea(screen);
+			GUILayout.BeginHorizontal();
+				GUILayout.FlexibleSpace();
+				GUILayout.BeginVertical();
+					GUILayout.FlexibleSpace();
+					if(GUILayout.Button(Localization.Get("worlds"), GUILayout.MaxWidth(w_2 / 3f), button_height))
+					{
+						_global.MenuState = MenuState.Worlds;
+					}
+					if(GUILayout.Button(Localization.Get("generatedlevel"), GUILayout.MaxWidth(w_2 / 3f), button_height))
+					{
+						_global.MenuState = MenuState.GeneratedLevel;
+					}
+					GUILayout.FlexibleSpace();
+				GUILayout.EndVertical();
+				GUILayout.FlexibleSpace();
+			GUILayout.EndHorizontal();
+		GUILayout.EndArea();
+	}
+	
+	private void GeneratedLevelMenu()
+	{
+		BackButton();
+		GUILayout.BeginArea(screen);
+			GUILayout.BeginHorizontal();
+				GUILayout.FlexibleSpace();
+				GUILayout.BeginVertical();
+					GUILayout.FlexibleSpace();
+					dificulties = new[]{
+											Localization.Get("easy"),
+											Localization.Get("medium"),
+											Localization.Get("hard"),
+											Localization.Get("insane")
+									   };
+					dificulty = GUILayout.SelectionGrid(dificulty, dificulties, 2, button_size_h);
+					if(GUILayout.Button(Textures.Play, button_size_h))
+					{
+						var chance = LevelGenerator.Chanses.Easy;
+						switch(dificulty)
+						{
+							case 0:
+								chance = LevelGenerator.Chanses.Easy;
+								break;
+							case 1:
+								chance = LevelGenerator.Chanses.Medium;
+								break;
+							case 2:
+								chance = LevelGenerator.Chanses.Hard;
+								break;
+							case 3:
+								chance = LevelGenerator.Chanses.Insane;
+								break;
+						}
+						
+						LevelGenerator.InitFromCube(5); //change to be ajustable
+						LevelGenerator.Chance = chance;
+				
+						_global.Data = LevelGenerator.Generate();
+						Application.LoadLevel("Game");
+					}
+					GUILayout.FlexibleSpace();
+				GUILayout.EndVertical();
+				GUILayout.FlexibleSpace();
+			GUILayout.EndHorizontal();
+		GUILayout.EndArea();
+	}
+	
 	private void WorldMenu()
 	{
+		BackButton();
 		GUILayout.BeginArea(screen);
 			GUILayout.BeginVertical();
-				BackButton();
 				GUILayout.BeginHorizontal();
 					GUILayout.Space(big_offset);
 					scrollWorlds = GUILayout.BeginScrollView(scrollWorlds, GUILayout.ExpandHeight(true));
@@ -195,8 +276,8 @@ public class MainMenuGUI : BaseGUI
 	
 	private void LevelMenu()
 	{
+		BackButton();
 		GUILayout.BeginVertical();
-			BackButton();
 			scrollLevels = GUILayout.BeginScrollView(scrollLevels, GUILayout.Width(w));
 				foreach(Level level in currentWorld.Levels)
 				{

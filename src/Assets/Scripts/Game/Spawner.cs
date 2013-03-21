@@ -87,8 +87,7 @@ public class Spawner : MonoBehaviour {
 	void Start()
 	{
 		_global = GameObject.Find("Global").GetComponent<Global>();
-		var level = _global.CurrentLevel.GetData();
-		LoadLevel(level);
+		LoadLevel(_global.Data);
 	}
 	
 	// Update is called once per frame

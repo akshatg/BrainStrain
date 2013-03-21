@@ -85,8 +85,11 @@ public class Global : MonoBehaviour
 		{
 			currentLevel = value.Number - 1;
 			currentWorld = value.World - 1;
+			Data = CurrentWorld.Levels[currentLevel].GetData();
 		}
 	}
+	
+	public char[,,] Data{ get; set; }
 	
 	public List<World> Worlds{ get; private set; }
 	
