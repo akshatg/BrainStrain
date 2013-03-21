@@ -5,29 +5,12 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 
-enum MenuState
-{
-	Main,
-	Settings,
-	Credits,
-	Worlds,
-	Levels,
-}
-
 public class MainMenuGUI : BaseGUI
 {
 	private Global _global;
 	private Vector2 scrollWorlds;
 	private Vector2 scrollLevels;
 	private World currentWorld;
-	private Stack<MenuState> states;
-	private MenuState State
-	{ 
-		get
-		{
-			return states.Peek();
-		}
-	}
 
 	// Use this for initialization
 	protected override void Start()
@@ -37,17 +20,8 @@ public class MainMenuGUI : BaseGUI
 		GetComponent<CameraControl>().State = CameraControl.CameraState.MainMenu;
 		_global = GameObject.Find("Global").GetComponent<Global>();
 		
-		states = new Stack<MenuState>();
-		
-		if(_global.CurrentLevel.Number == 1 && _global.CurrentWorld.Number == 1)
+		if(_global.MenuState == MenuState.Levels)
 		{
-			states.Push(MenuState.Main);
-		}
-		else
-		{
-			states.Push(MenuState.Main);
-			states.Push(MenuState.Worlds);
-			states.Push(MenuState.Levels);
 			currentWorld = _global.CurrentWorld;
 		}
 	}
@@ -73,7 +47,7 @@ public class MainMenuGUI : BaseGUI
 	{
 		base.OnGUI();
 		
-		switch (State)
+		switch(_global.MenuState)
 		{
 			case MenuState.Main:
 				if(Input.GetKeyDown(KeyCode.Escape))
@@ -105,17 +79,17 @@ public class MainMenuGUI : BaseGUI
 				GUILayout.BeginHorizontal();
 					if(GUILayout.Button(Textures.Settings, button_size_w, button_size_h))
 					{
-						states.Push(MenuState.Settings);
+						_global.MenuState = MenuState.Settings;
 					}
 					GUILayout.FlexibleSpace();
 					if(GUILayout.Button(Localization.Get("play"), GUILayout.MaxWidth(w_2 / 3f), button_size_h))
 					{
-						states.Push(MenuState.Worlds);
+						_global.MenuState = MenuState.Worlds;
 					}
 					GUILayout.FlexibleSpace();
 					if(GUILayout.Button(Textures.Credits, button_size_w, button_size_h))
 					{
-						states.Push(MenuState.Credits);
+						_global.MenuState = MenuState.Credits;
 					}
 				GUILayout.EndHorizontal();
 			GUILayout.EndVertical();
@@ -207,7 +181,7 @@ public class MainMenuGUI : BaseGUI
 								if(WorldButton(world))
 								{
 									currentWorld = world;
-									states.Push(MenuState.Levels);
+									_global.MenuState = MenuState.Levels;
 								}
 							}
 						GUILayout.EndHorizontal();
@@ -240,12 +214,7 @@ public class MainMenuGUI : BaseGUI
 	private void BackButton()
 	{
 		if(GUILayout.Button(Textures.Back, button_width, button_height))
-		{
-			if(states.Count > 0)
-			{
-				states.Pop();
-			}
-		}
+			_global.MenuBack();
 	}
 	
 	private float VolumeSlider(float volume, string name)

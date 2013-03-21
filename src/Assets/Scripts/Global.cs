@@ -48,11 +48,23 @@ public class Level
 	}
 }
 
+public enum MenuState
+{
+	Main,
+	Settings,
+	Credits,
+	Modes,
+	GeneratedLevel,
+	Worlds,
+	Levels,
+}
+
 /// <summary>
 /// Holds worlds and levels information and manages saving/loading game data
 /// </summary>
 public class Global : MonoBehaviour
 {
+	
 	public static string LevelsFile;
 	public static string SettingsFile;
 	
@@ -78,8 +90,21 @@ public class Global : MonoBehaviour
 	
 	public List<World> Worlds{ get; private set; }
 	
+	public MenuState MenuState
+	{ 
+		get
+		{
+			return states.Peek();
+		}
+		set
+		{
+			states.Push(value);	
+		}
+	}
+	
 	private int currentLevel;
 	private int currentWorld;
+	private Stack<MenuState> states;
 	
 	void Awake()
 	{
@@ -92,6 +117,9 @@ public class Global : MonoBehaviour
 		// /!\ TEST AREA /!\
 		LevelGenerator.Chance = LevelGenerator.Chanses.Easy;
 		// /!\           /!\
+		
+		states = new Stack<MenuState>();
+		states.Push(MenuState.Main);
 		
 		LevelsFile = Application.persistentDataPath + "/levels_data.txt";
 		SettingsFile = Application.persistentDataPath + "/settings_data.txt";
@@ -114,6 +142,13 @@ public class Global : MonoBehaviour
 			throw new Exception("Problem with save files!", ex);
 		}
 		Application.LoadLevel("MainMenu");
+	}
+	
+	public MenuState MenuBack()
+	{
+		if(states.Count > 0)
+			return states.Pop();
+		throw new InvalidOperationException("This is the root menu state! No turning back");
 	}
 	
 	public Level NextLevel()
