@@ -69,11 +69,17 @@ a:hover {
 
 h1.title {
   margin: 30px 20px 10px;
-  font-size: 60px;
+  font-size: 100px;
   font-weight: bold;
-  font-style: italic;
-  font-family:Georgia, serif;
+  font-style: bold;
+  font-family: "Arial Rounded MT Bold", serif;
   text-align: center;
+  color: #ecffba;
+  text-shadow:
+    -4px -4px 4px #ff3a6f,
+    4px -4px 4px #ff3a6f,
+    -4px 4px 4px #ff3a6f,
+    4px 4px 4px #ff3a6f;
 }
 
 .wrapper {
