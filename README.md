@@ -10,9 +10,7 @@ The game is avalable in two languages - English and Bulgarian and in two platfor
 3. Each set must have exacly one block with a diggit on it
 
 ##Download
-You can download the most recent version of the game builded [here][]:
-###[Windows][]
-###[Android][]
+  `//add download link here`
 
 ##TODO
 [High priority]
