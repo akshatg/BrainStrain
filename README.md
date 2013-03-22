@@ -10,14 +10,14 @@ The game is avalable in two languages - English and Bulgarian and in two platfor
 3. Each set must have exacly one block with a diggit on it
 
 ##Download
-You can download the most recen version of the game builded in the bin forlder depending on your platform:
+You can download the most recent version of the game builded [here][]:
 ###[Windows][]
 ###[Android][]
 
 ##TODO
 [High priority]
-- Make random level generation(basic idea done but not working and not tested at all) [40%] <-
-  - Fix Android bug when loading settings file [0%] <-
+- Make random level generation [90%]
+- Fix Android bug when loading settings file [0%] <-
 - Add block type to ID [0%]
 - Clen up dirty code mess
   - Clean up Block class hierarchy [90%]
@@ -38,8 +38,6 @@ You can download the most recen version of the game builded in the bin forlder d
   - others [0%]
 - Maybe add some encryption to save files (but later when everything is stable) [0%]
 
-*full TODO [here][todo]*
-
 ##License
   ```
   Copyright 2013 Borislav Kosharov
@@ -56,7 +54,3 @@ You can download the most recen version of the game builded in the bin forlder d
   See the License for the specific language governing permissions and
   limitations under the License.
   ```
-  
-[windows]: https://github.com/nikibobi/BrainStrain/tree/master/bin/Windows
-[android]: https://github.com/nikibobi/BrainStrain/tree/master/bin/Android
-[todo]: https://github.com/nikibobi/BrainStrain/blob/master/src/Assets/TODO.txt
